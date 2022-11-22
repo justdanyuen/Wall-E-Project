@@ -73,15 +73,15 @@ public class DudeNotFull extends Dude{
             ImageStore imageStore,
             EventScheduler scheduler)
     {
-        Optional<Entity> target =
-                world.findNearest(this.getPosition(), new ArrayList<>(Arrays.asList(Trash.class)));
+//        Optional<Entity> target =
+//                world.findNearest(this.getPosition(), new ArrayList<>(Arrays.asList(Trash.class)));
 
-        if (!target.isPresent() || !this.moveTo(world, target.get(), scheduler)
-                || !this.transformNotFull(world, scheduler, imageStore))
-        {
-            scheduler.scheduleEvent(this,
-                    this.createActivityAction(world, imageStore),
-                    this.getActionPeriod());
-        }
+//        if (!target.isPresent() || !this.moveTo(world, target.get(), scheduler)
+//                || !this.transformNotFull(world, scheduler, imageStore))
+//        {
+//            scheduler.scheduleEvent(this,
+//                    this.createActivityAction(world, imageStore),
+//                    this.getActionPeriod());
+//        }
     }
 }

@@ -13,8 +13,8 @@ public final class VirtualWorld extends PApplet
     public static final int VIEW_HEIGHT = 600;
     public static final int TILE_WIDTH = 40;
     public static final int TILE_HEIGHT = 40;
-    public static final int WORLD_WIDTH_SCALE = 2;
-    public static final int WORLD_HEIGHT_SCALE = 2;
+    public static final int WORLD_WIDTH_SCALE = 1;
+    public static final int WORLD_HEIGHT_SCALE = 1;
 
     public static final int VIEW_COLS = VIEW_WIDTH / TILE_WIDTH;
     public static final int VIEW_ROWS = VIEW_HEIGHT / TILE_HEIGHT;
@@ -25,7 +25,10 @@ public final class VirtualWorld extends PApplet
     public static final String DEFAULT_IMAGE_NAME = "background_default";
     public static final int DEFAULT_IMAGE_COLOR = 0x808080;
 
-    public static String LOAD_FILE_NAME = "world.sav";
+    public static String LOAD_FILE_NAME = "world.sav"; // scene 1
+    public static String SCENE_2 = "space.sav";
+    public static String SCENE_3 = "earth2.sav";
+
 
     public static final String FAST_FLAG = "-fast";
     public static final String FASTER_FLAG = "-faster";
@@ -64,6 +67,10 @@ public final class VirtualWorld extends PApplet
 
 
         loadImages(IMAGE_LIST_FILE_NAME, imageStore, this);
+
+        // key to scene change??
+        // move to draw if wanting to change scene bc setup runs once
+        // issue: draw runs 60x per second
         loadWorld(world, LOAD_FILE_NAME, imageStore);
 
         scheduleActions(world, scheduler, imageStore);
@@ -140,7 +147,7 @@ public final class VirtualWorld extends PApplet
             Entity walle = world.getOccupancyCell(p); // start pos
             Point newP = new Point(walle.getPosition().x + dx, walle.getPosition().y + dy);
 
-            if (world.getOccupancyCell(newP) == null){
+            if (world.getOccupancyCell(newP) == null && (newP.x > 0 && newP.x < VIEW_COLS - 1) && (newP.y > 0 && newP.y < VIEW_ROWS - 1)){
                 world.moveEntity(walle, newP);
                 p = new Point(walle.getPosition().x, walle.getPosition().y);
             }
