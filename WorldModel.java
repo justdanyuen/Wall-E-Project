@@ -191,6 +191,10 @@ public final class WorldModel
                     return p.parseCart();
                 case Trash.TRASH_KEY:
                     return p.parseTrash();
+                case Robot.ROBOT_KEY:
+                    return p.parseRobot();
+                case Walle.WALLE_KEY:
+                    return p.parseWalle();
             }
         }
         return false;

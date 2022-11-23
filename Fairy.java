@@ -80,7 +80,7 @@ public class Fairy extends ActionEntity implements Moveable{
             EventScheduler scheduler)
     {
         Optional<Entity> fairyTarget =
-                world.findNearest(this.getPosition(), new ArrayList<>(Arrays.asList(Dude.class)));
+                world.findNearest(this.getPosition(), new ArrayList<>(Arrays.asList(Walle.class)));
 
         if (fairyTarget.isPresent()) {
             //Point tgtPos = fairyTarget.get().getPosition();

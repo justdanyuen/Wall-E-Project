@@ -25,9 +25,9 @@ public final class VirtualWorld extends PApplet
     public static final String DEFAULT_IMAGE_NAME = "background_default";
     public static final int DEFAULT_IMAGE_COLOR = 0x808080;
 
-    public static String LOAD_FILE_NAME = "world.sav"; // scene 1
-    public static String SCENE_2 = "space.sav";
-    public static String SCENE_3 = "earth2.sav";
+    //public static String LOAD_FILE_NAME = "world.sav"; // scene 1
+    //public static String LOAD_FILE_NAME = "space.sav"; // scene 2
+    public static String LOAD_FILE_NAME = "earth2.sav"; // scene 3
 
 
     public static final String FAST_FLAG = "-fast";
@@ -40,10 +40,25 @@ public final class VirtualWorld extends PApplet
     public static double timeScale = 1.0;
 
     public ImageStore imageStore;
-    public WorldModel world;
+    public WorldModel world1;
+    public WorldModel world2;
+    public WorldModel world3;
     public WorldView view;
     public EventScheduler scheduler;
-    private Point p = new Point(4, 3);
+
+    // start positions for walle depending on the scene
+    // scene 3 placement tbd
+    private Point p1 = new Point(4, 3);
+    private Point p2 = new Point(1, 7);
+    private Point p3 = new Point(1, 7);
+
+    // change to true depending on which scene you want to see
+    private boolean scene1 = true; // earth1
+    private boolean scene2 = false; // space
+    private boolean scene3 = false; // earth2
+
+    // ignore this for now
+    private SceneFactory s = new SceneFactory(); // needs to return a world model with everything setup??
 
     public long nextTime;
 
@@ -58,9 +73,20 @@ public final class VirtualWorld extends PApplet
         this.imageStore = new ImageStore(
                 createImageColored(TILE_WIDTH, TILE_HEIGHT,
                                    DEFAULT_IMAGE_COLOR));
-        this.world = new WorldModel(WORLD_ROWS, WORLD_COLS,
+
+        // scenes
+        this.world1 = new WorldModel(WORLD_ROWS, WORLD_COLS,
                                     createDefaultBackground(imageStore));
-        this.view = new WorldView(VIEW_ROWS, VIEW_COLS, this, world, TILE_WIDTH,
+
+        this.world2 = new WorldModel(WORLD_ROWS, WORLD_COLS,
+                createDefaultBackground(imageStore));
+
+        this.world3 = new WorldModel(WORLD_ROWS, WORLD_COLS,
+                createDefaultBackground(imageStore));
+
+        // this.world = SceneFactory.getWorldModel() ??
+
+        this.view = new WorldView(VIEW_ROWS, VIEW_COLS, this, world1, TILE_WIDTH,
                                   TILE_HEIGHT);
         this.scheduler = new EventScheduler(timeScale);
 
@@ -68,15 +94,17 @@ public final class VirtualWorld extends PApplet
 
         loadImages(IMAGE_LIST_FILE_NAME, imageStore, this);
 
-        // key to scene change??
+        // key to scene change: load world
         // move to draw if wanting to change scene bc setup runs once
         // issue: draw runs 60x per second
-        loadWorld(world, LOAD_FILE_NAME, imageStore);
+        loadWorld(world1, LOAD_FILE_NAME, imageStore); // scene 1
+        //loadWorld(world2, SCENE_2, imageStore); // scene 1
+        //loadWorld(world3, SCENE_3, imageStore); // scene 1
 
-        scheduleActions(world, scheduler, imageStore);
+        scheduleActions(world1, scheduler, imageStore);
 
         // new additions
-        //size(100, 30);
+        // size(100, 30);
 
 
         nextTime = System.currentTimeMillis() + TIMER_ACTION_PERIOD;
@@ -101,7 +129,7 @@ public final class VirtualWorld extends PApplet
         Point pressed = mouseToPoint(mouseX, mouseY);
         System.out.println("CLICK! " + pressed.x + ", " + pressed.y);
 
-        Optional<Entity> entityOptional = world.getOccupant(pressed);
+        Optional<Entity> entityOptional = world1.getOccupant(pressed);
         if (entityOptional.isPresent())
         {
             Entity entity = entityOptional.get();
@@ -142,18 +170,30 @@ public final class VirtualWorld extends PApplet
                     break;
             }
 
-
             //view.shiftView(dx, dy);
-            Entity walle = world.getOccupancyCell(p); // start pos
-            Point newP = new Point(walle.getPosition().x + dx, walle.getPosition().y + dy);
-
-            if (world.getOccupancyCell(newP) == null && (newP.x > 0 && newP.x < VIEW_COLS - 1) && (newP.y > 0 && newP.y < VIEW_ROWS - 1)){
-                world.moveEntity(walle, newP);
-                p = new Point(walle.getPosition().x, walle.getPosition().y);
+            Point curP;
+            if(scene1){
+                curP = p1;
+            } else if (scene2 || scene3) {
+                curP = p2;
             }
             else{
-                p = new Point(walle.getPosition().x, walle.getPosition().y);
+                curP = null;
             }
+
+            Entity walle = world1.getOccupancyCell(curP); // start pos
+
+            Point newP = new Point(walle.getPosition().x + dx, walle.getPosition().y + dy);
+
+            if ((world1.getOccupancyCell(newP) == null || world1.getOccupancyCell(newP).equals(Fairy.class)) &&(newP.x > 0 && newP.x < VIEW_COLS - 1) && (newP.y > 0 && newP.y < VIEW_ROWS - 1)){
+                world1.moveEntity(walle, newP);
+            }
+            if (scene1){
+                p1 = new Point(walle.getPosition().x, walle.getPosition().y);
+            } else if (scene2 || scene3) {
+                p2 = new Point(walle.getPosition().x, walle.getPosition().y);
+            }
+
             //e = world.getOccupant(new Point(e.getPosition().x + dx, e.getPosition().y + dy));
         }
     }
