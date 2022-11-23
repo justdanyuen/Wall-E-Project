@@ -1,0 +1,55 @@
+house images/house.bmp 255 255 255 0
+
+light_dirt images/LightDirt.png
+dark_dirt images/Dirt.png
+ship_floor images/ShipFloor.png
+ship_wall images/ShipWall.png
+
+background_default images/none.bmp
+
+
+pipe_b images/Pipe1.png
+pipe_m images/Pipe2.png
+pipe_e images/Pipe3.png
+
+tires images/Tires.png
+
+shopping_cart images/ShoppingCart.png
+
+sign_short images/BuyNLarge.png
+sign_long images/BuyNLargeLong-01.png
+
+dude images/WALLE1.png
+dude images/WALLE2.png
+dude images/WALLE3.png
+dude images/WALLE1.png
+
+walle images/WALLE1.png
+walle images/WALLE2.png
+walle images/WALLE3.png
+walle images/WALLE1.png
+
+fairy images/Plant.png
+fairy images/Plant.png
+fairy images/Plant.png
+fairy images/Plant.png
+fairy images/Plant.png
+fairy images/Plant.png
+fairy images/Plant.png
+fairy images/Plant.png
+
+sapling images/Pipe1.png
+sapling images/Pipe1.png
+sapling images/Pipe1.png
+sapling images/Pipe1.png
+sapling images/Pipe1.png
+
+trash images/Trash1.png
+trash images/Trash2.png
+trash images/Trash3.png
+trash images/Trash1.png
+
+robot images/BaracadeBot1.png
+robot images/BaracadeBot2.png
+robot images/BaracadeBot1.png
+robot images/BaracadeBot2.png
