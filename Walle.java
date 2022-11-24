@@ -31,9 +31,9 @@ public class Walle extends ActionEntity{
     }
 
 
-    public void incrementScore(){
-        score += 1;
-    }
+//    public void incrementScore(){
+//        score += 1;
+//    }
 
     public int getScore(){
         return score;
@@ -60,12 +60,34 @@ public class Walle extends ActionEntity{
             ImageStore imageStore,
             EventScheduler scheduler)
     {
-        //if () {
-            scheduler.scheduleEvent(this,
-                    this.createActivityAction(world, imageStore),
-                    this.getActionPeriod());
-        //}
+        // if cur pos == trash.position
+        Object[] entities = world.getEntities().stream().toArray();
+
+        for (Object e : entities){
+            if (e.getClass().equals(Trash.class)){
+                //world.removeEntity((Trash)e);
+                ((Trash)e).updateHealth(-1); // subtract from health
+                ((Trash)e).transform(world, scheduler, imageStore);
+                score++;
+            }
+        }
+
+
+        // trash.health --
+        // score ++
+        // check if scene needs to be changes - Walle reached Eve
     }
 
+    public void moveWalle(WorldModel world, Point p){
+
+        if ((!world.isOccupied(p)
+                || (world.isOccupied(p) && world.getOccupancyCell(p).getClass().equals(Trash.class)))
+                && (p.x > 0 && p.x < VirtualWorld.VIEW_COLS - 1) && (p.y > 0 && p.y < VirtualWorld.VIEW_ROWS - 1)){
+            world.moveEntity(this, p);
+
+            //world.removeEntityAt(new Point(1, 7));
+        }
+        this.setPosition(new Point(this.getPosition().x + p.x, this.getPosition().y + p.y));
+    }
 
 }

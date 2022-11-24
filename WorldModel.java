@@ -129,11 +129,11 @@ public final class WorldModel
     }
 
     public void addEntity(Entity entity) {
-        System.out.println(entity.getPosition());
+        //System.out.println(entity.getPosition());
         if (this.withinBounds(entity.getPosition())) {
             this.setOccupancyCell(entity.getPosition(), entity);
             this.entities.add(entity);
-            System.out.println(entity.getClass() + " ADDED TO ENTITIES \n");
+           // System.out.println(entity.getClass() + " ADDED TO ENTITIES \n");
         }
     }
     public void moveEntity(Entity entity, Point pos) {
@@ -147,7 +147,7 @@ public final class WorldModel
     }
 
     public void tryAddEntity(Entity entity) {
-        System.out.println(entity.getPosition());
+        //System.out.println(entity.getPosition());
         if (this.isOccupied(entity.getPosition())) {
             // arguably the wrong type of exception, but we are not
             // defining our own exceptions yet
@@ -215,7 +215,6 @@ public final class WorldModel
                 case ShoppingCart.CART_KEY:
                     return p.parseCart();
                 case Trash.TRASH_KEY:
-                    System.out.println("TRASH");
                     return p.parseTrash();
                 case BarricadeBot.BARRICADE_ROBOT_KEY:
                     return p.parseBarricadeRobot();

@@ -19,25 +19,6 @@ public class Trash extends Plant{
         super(id, position, images, animationPeriod, actionPeriod, health);
         //this.health = health;
     }
-//    Trash trash = new Trash(this.properties[Trash.TRASH_ID],
-//            pt,
-//            this.imageStore.getImageList(Trash.TRASH_KEY),
-//            Integer.parseInt(this.properties[Trash.TRASH_ANIMATION_PERIOD]),
-//            Integer.parseInt(this.properties[Trash.TRASH_ACTION_PERIOD]),
-//            Integer.parseInt(this.properties[Trash.TRASH_HEALTH]));
-//    public int getHealth(){
-//        return health;
-//    }
-
-    public void scheduleActions(
-            EventScheduler scheduler,
-            WorldModel world,
-            ImageStore imageStore)
-    {
-        scheduler.scheduleEvent(this,
-                this.createAnimationAction(0),
-                this.getAnimationPeriod());
-    }
 
     public boolean transform(
             WorldModel world,
@@ -47,6 +28,7 @@ public class Trash extends Plant{
         if (super.getHealth() <= 0) {
             world.removeEntity(this);
             scheduler.unscheduleAllEvents(this);
+            System.out.println("TRASH REMOVED");
             return true;
         }
 

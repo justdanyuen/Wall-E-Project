@@ -27,10 +27,10 @@ public class Eve extends ActionEntity{
             ImageStore imageStore,
             EventScheduler scheduler)
     {
-        if (walleReachedEve) {
+        //if (walleReachedEve) {
             scheduler.scheduleEvent(this,
                     this.createActivityAction(world, imageStore),
                     this.getActionPeriod());
-        }
+       // }
     }
 }

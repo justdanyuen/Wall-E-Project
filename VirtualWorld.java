@@ -44,6 +44,8 @@ public final class VirtualWorld extends PApplet
     public WorldModel world;
     public WorldModel world2;
     public WorldModel world3;
+
+
     public WorldView view;
     public EventScheduler scheduler;
 
@@ -58,10 +60,16 @@ public final class VirtualWorld extends PApplet
     private boolean scene2 = false; // space
     private boolean scene3 = false; // earth2
 
+
+
     private Object[] entities1;
     private Object[] entities2;
 
+    private Entity walle;
+    private Point start;
+
     // ignore this for now
+
     private SceneFactory s = new SceneFactory(); // needs to return a world model with everything setup??
     private Scene curScene;
 
@@ -94,6 +102,9 @@ public final class VirtualWorld extends PApplet
         loadWorld(world, curScene.returnSceneFile(), imageStore); // scene 1
         // store all entities currently in the world
         entities1 = world.getEntities().stream().toArray();
+
+        start = new Point(4, 3);
+        walle = world.getOccupancyCell(start); // start pos
 
 
         nextTime = System.currentTimeMillis() + TIMER_ACTION_PERIOD;
@@ -134,27 +145,31 @@ public final class VirtualWorld extends PApplet
 
         for (Object e : entities1){
             //System.out.println(e.getClass());
-            if (e instanceof Entity && !e.getClass().equals(Roach.class)) {
+            if (e instanceof Entity && !e.getClass().equals(Roach.class) && !e.getClass().equals(Walle.class)) {
                 world.removeEntity((Entity) e);
-                //System.out.println("REMOVED");
             }
         }
 
         loadWorld(world, curScene.returnSceneFile(), imageStore); // scene 1
+//        world.addEntity(new Walle(
+//                "walle_1_7",
+//                new Point(1, 7),
+//                imageStore.getImageList(Walle.WALLE_KEY),
+//                Walle.WALLE_ANIMATION_PERIOD,
+//                Walle.WALLE_ACTION_PERIOD));
+
         entities2 = world.getEntities().stream().toArray();
 
     }
 
     public void drawScene3(){
-
-
         //System.out.println(world.getEntities().size());
         curScene = s.createScene("3");
 
 
         for (Object e : entities2){
             System.out.println(e.getClass());
-            if (e instanceof Entity && !e.getClass().equals(Roach.class)) {
+            if (e instanceof Entity && !e.getClass().equals(Roach.class) && !e.getClass().equals(Walle.class)) {
                 world.removeEntity((Entity) e);
             }
         }
@@ -174,12 +189,15 @@ public final class VirtualWorld extends PApplet
         if (pressed.x == 19 && pressed.y == 0){
             scene1 = false;
             scene2 = true;
+            walle.setPosition(new Point(1, 7));
         }
 
         if (pressed.x == 19 && pressed.y == 14){
             scene1 = false;
             scene2 = false;
             scene3 = true;
+            walle.setPosition(new Point(1, 7));
+
         }
 
         Optional<Entity> entityOptional = world.getOccupant(pressed);
@@ -227,36 +245,41 @@ public final class VirtualWorld extends PApplet
             }
 
             //view.shiftView(dx, dy);
-            Point curP = null;
-            if(scene1){
-                curP = p1;
-            }
+            //System.out.println(newP);
+//            if(scene1){
+//                curP = p1;
+//            }
+//            if(scene2){
+//                curP = p2;
+//            }
+//            if (scene3){
+//                curP = p3;
+//            }
             if(scene2){
-                curP = p2;
-            }
-            if (scene3){
-                curP = p3;
-            }
+                System.out.println("SCENE2");
 
-            //System.out.println(curP);
-            Entity walle = world.getOccupancyCell(curP); // start pos
 
-            //System.out.println(walle);
+            }
+            else if(scene3){
+                System.out.println("SCENE2");
+                //walle.setPosition(new Point(1, 7));
+
+            }
 
             Point newP = new Point(walle.getPosition().x + dx, walle.getPosition().y + dy);
+            System.out.println(newP);
+           // walle = world.getOccupancyCell(newP); // start pos
+            System.out.println(walle.getPosition());
 
-            if ((world.getOccupancyCell(newP) == null || world.getOccupancyCell(newP).equals(Roach.class)) &&(newP.x > 0 && newP.x < VIEW_COLS - 1) && (newP.y > 0 && newP.y < VIEW_ROWS - 1)){
-                world.moveEntity(walle, newP);
-                world.removeEntityAt(new Point(1, 7));
+            if ((!world.isOccupied(newP)
+                    || (world.isOccupied(newP) && world.getOccupancyCell(newP).getClass().equals(Trash.class)))
+                    && (newP.x > 0 && newP.x < VIEW_COLS - 1) && (newP.y > 0 && newP.y < VIEW_ROWS - 1)){
+
+                world.moveEntity(walle,newP);
+                System.out.println(walle.getPosition());
             }
 
-            if (scene1){
-                p1 = new Point(walle.getPosition().x, walle.getPosition().y);
-            } else if (scene2) {
-                p2 = new Point(walle.getPosition().x, walle.getPosition().y);
-            } else if (scene3) {
-                p3 = new Point(walle.getPosition().x, walle.getPosition().y);
-            }
+
         }
     }
 

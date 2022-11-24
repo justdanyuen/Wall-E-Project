@@ -331,7 +331,7 @@ tires tires_2_12 2 12
 
 tires tires_3_6 3 6
 tires tires_4_6 4 6
-tires tires_5_6 5 6
+
 tires tires_6_6 6 6
 tires tires_6_6 6 5
 tires tires_6_4 6 4
@@ -419,8 +419,6 @@ tires tires_7_5 7 5
 tires tires_6_2 6 2
 tires tires_6_3 6 3
 tires tires_6_4 6 4
-tires tires_6_5 6 5
-tires tires_5_5 5 5
 
 tires tires_13_4 13 4
 tires tires_13_5 13 5
@@ -432,6 +430,6 @@ tires tires_11_8 11 8
 tires tires_11_7 11 7
 tires tires_11_6 11 6
 
-walle walle_1_7 1 7 100
+
 
 
