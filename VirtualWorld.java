@@ -58,6 +58,9 @@ public final class VirtualWorld extends PApplet
     private boolean scene2 = false; // space
     private boolean scene3 = false; // earth2
 
+    private Object[] entities1;
+    private Object[] entities2;
+
     // ignore this for now
     private SceneFactory s = new SceneFactory(); // needs to return a world model with everything setup??
     private Scene curScene;
@@ -84,37 +87,13 @@ public final class VirtualWorld extends PApplet
                                   TILE_HEIGHT);
         this.scheduler = new EventScheduler(timeScale);
 
-
-
         loadImages(IMAGE_LIST_FILE_NAME, imageStore, this);
 
-        // key to scene change: load world
-        // move to draw if wanting to change scene bc setup runs once
-        // issue: draw runs 60x per second
-        //if(scene3) {
-//            curScene = s.createScene("3");
-//            loadWorld(world, curScene.returnSceneFile(), imageStore); // scene 1
-        //}
 
-       // if(scene2) {
-//            curScene = s.createScene("2");
-//            loadWorld(world, curScene.returnSceneFile(), imageStore); // scene 1
-        //}
-
-        //if(scene1) {
         curScene = s.createScene("1");
         loadWorld(world, curScene.returnSceneFile(), imageStore); // scene 1
-        System.out.println(world.getEntities().size());
-        //}
-
-
-        //loadWorld(world2, SCENE_2, imageStore); // scene 1
-        //loadWorld(world3, SCENE_3, imageStore); // scene 1
-
-        scheduleActions(world, scheduler, imageStore);
-
-        // new additions
-        // size(100, 30);
+        // store all entities currently in the world
+        entities1 = world.getEntities().stream().toArray();
 
 
         nextTime = System.currentTimeMillis() + TIMER_ACTION_PERIOD;
@@ -127,11 +106,15 @@ public final class VirtualWorld extends PApplet
             nextTime = time + TIMER_ACTION_PERIOD;
         }
 
+//        if (scene1){
+//            drawScene1();
+//        }
+
         if (scene2) {
             drawScene2();
-
         }
-        if (scene3) {
+
+        else if (scene3) {
             drawScene3();
         }
 
@@ -143,29 +126,41 @@ public final class VirtualWorld extends PApplet
     }
 
     public void drawScene2(){
-        Object[] entities1 = world.getEntities().stream().toArray();
+        //Object[] entities2 = world.getEntities().stream().toArray();
+        //this.world = new WorldModel(WORLD_ROWS, WORLD_COLS, createDefaultBackground(imageStore));
+
+        //System.out.println(world.getEntities().size());
+        curScene = s.createScene("2");
+
         for (Object e : entities1){
-            if (e.getClass().equals(Entity.class)) {
+            //System.out.println(e.getClass());
+            if (e instanceof Entity && !e.getClass().equals(Roach.class)) {
                 world.removeEntity((Entity) e);
+                //System.out.println("REMOVED");
             }
         }
 
-        System.out.println(world.getEntities().size());
-        curScene = s.createScene("2");
         loadWorld(world, curScene.returnSceneFile(), imageStore); // scene 1
+        entities2 = world.getEntities().stream().toArray();
+
     }
 
     public void drawScene3(){
-        Object[] entities1 = world.getEntities().stream().toArray();
-        for (Object e : entities1){
-            if (e.getClass().equals(Entity.class)) {
+
+
+        //System.out.println(world.getEntities().size());
+        curScene = s.createScene("3");
+
+
+        for (Object e : entities2){
+            System.out.println(e.getClass());
+            if (e instanceof Entity && !e.getClass().equals(Roach.class)) {
                 world.removeEntity((Entity) e);
             }
-
         }
-        System.out.println(world.getEntities().size());
-        curScene = s.createScene("3");
+
         loadWorld(world, curScene.returnSceneFile(), imageStore); // scene 1
+        scheduleActions(world, scheduler, imageStore);
     }
 
 
@@ -175,15 +170,16 @@ public final class VirtualWorld extends PApplet
         Point pressed = mouseToPoint(mouseX, mouseY);
         System.out.println("CLICK! " + pressed.x + ", " + pressed.y);
 
+        // JUST TEMPORARY - check if scene change can happen
         if (pressed.x == 19 && pressed.y == 0){
             scene1 = false;
             scene2 = true;
         }
 
         if (pressed.x == 19 && pressed.y == 14){
+            scene1 = false;
             scene2 = false;
             scene3 = true;
-
         }
 
         Optional<Entity> entityOptional = world.getOccupant(pressed);
@@ -235,11 +231,16 @@ public final class VirtualWorld extends PApplet
             if(scene1){
                 curP = p1;
             }
-            if(scene2 || scene3){
+            if(scene2){
                 curP = p2;
             }
+            if (scene3){
+                curP = p3;
+            }
+
             System.out.println(curP);
             Entity walle = world.getOccupancyCell(curP); // start pos
+
             System.out.println(walle);
 
             Point newP = new Point(walle.getPosition().x + dx, walle.getPosition().y + dy);
@@ -247,10 +248,13 @@ public final class VirtualWorld extends PApplet
             if ((world.getOccupancyCell(newP) == null || world.getOccupancyCell(newP).equals(Roach.class)) &&(newP.x > 0 && newP.x < VIEW_COLS - 1) && (newP.y > 0 && newP.y < VIEW_ROWS - 1)){
                 world.moveEntity(walle, newP);
             }
+
             if (scene1){
                 p1 = new Point(walle.getPosition().x, walle.getPosition().y);
-            } else if (scene2 || scene3) {
+            } else if (scene2) {
                 p2 = new Point(walle.getPosition().x, walle.getPosition().y);
+            } else if (scene3) {
+                p3 = new Point(walle.getPosition().x, walle.getPosition().y);
             }
         }
     }
