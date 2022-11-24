@@ -184,15 +184,22 @@ public class Parse {
 
     public boolean parseTrash()
     {
+        System.out.println(this.properties.length == Trash.TRASH_NUM_PROPERTIES);
         if (this.properties.length == Trash.TRASH_NUM_PROPERTIES) {
             Point pt = new Point(Integer.parseInt(this.properties[Trash.TRASH_COL]),
                     Integer.parseInt(this.properties[Trash.TRASH_ROW]));
-            int health = Integer.parseInt(this.properties[Trash.TRASH_HEALTH]);
-            Trash trash = new Trash(this.properties[Trash.TRASH_ID], pt,
-                    imageStore.getImageList(Trash.TRASH_KEY),
-                    Integer.parseInt(this.properties[Trash.TRASH_ANIMATION_PERIOD]), health);
+            System.out.println(pt);
+            System.out.println("CREATING");
+            Trash trash = new Trash(this.properties[Trash.TRASH_ID],
+                    pt,
+                    this.imageStore.getImageList(Trash.TRASH_KEY),
+                    Integer.parseInt(this.properties[Trash.TRASH_ANIMATION_PERIOD]),
+                    Integer.parseInt(this.properties[Trash.TRASH_ACTION_PERIOD]),
+                    Integer.parseInt(this.properties[Trash.TRASH_HEALTH]));
+            System.out.println("TRASH CREATED");
             this.world.tryAddEntity(trash);
         }
+        //System.out.println(" \n");
         return this.properties.length == Trash.TRASH_NUM_PROPERTIES;
     }
 
@@ -276,5 +283,22 @@ public class Parse {
         }
 
         return this.properties.length == Hub.HUB_NUM_PROPERTIES;
+    }
+
+    public boolean parseEve()
+    {
+        if (this.properties.length == Eve.EVE_NUM_PROPERTIES) {
+            Point pt = new Point(Integer.parseInt(this.properties[Eve.EVE_COL]),
+                    Integer.parseInt(this.properties[Eve.EVE_ROW]));
+            Eve eve = new Eve(this.properties[Eve.EVE_ID],
+                    pt,
+                    imageStore.getImageList(Eve.EVE_KEY),
+                    Integer.parseInt(properties[Eve.EVE_ANIMATION_PERIOD]),
+                    Integer.parseInt(properties[Eve.EVE_ACTION_PERIOD]));
+
+            this.world.tryAddEntity(eve);
+        }
+
+        return this.properties.length == Tree.TREE_NUM_PROPERTIES;
     }
 }

@@ -110,7 +110,7 @@ public final class WorldModel
         return this.withinBounds(pos) && this.getOccupancyCell(pos) != null;
     }
 
-    private void removeEntityAt(Point pos) {
+    public void removeEntityAt(Point pos) { //ORIGINALLY PRIVATE
         if (this.withinBounds(pos) && this.getOccupancyCell(pos) != null) {
             Entity entity = this.getOccupancyCell(pos);
 
@@ -123,14 +123,17 @@ public final class WorldModel
             this.setOccupancyCell(pos, null);
         }
     }
+
     public void removeEntity(Entity entity) {
         this.removeEntityAt(entity.getPosition());
     }
 
     public void addEntity(Entity entity) {
+        System.out.println(entity.getPosition());
         if (this.withinBounds(entity.getPosition())) {
             this.setOccupancyCell(entity.getPosition(), entity);
             this.entities.add(entity);
+            System.out.println(entity.getClass() + " ADDED TO ENTITIES \n");
         }
     }
     public void moveEntity(Entity entity, Point pos) {
@@ -144,12 +147,13 @@ public final class WorldModel
     }
 
     public void tryAddEntity(Entity entity) {
+        System.out.println(entity.getPosition());
         if (this.isOccupied(entity.getPosition())) {
             // arguably the wrong type of exception, but we are not
             // defining our own exceptions yet
             throw new IllegalArgumentException("position occupied");
         }
-
+        //System.out.println("ADDED");
         this.addEntity(entity);
     }
 
@@ -211,6 +215,7 @@ public final class WorldModel
                 case ShoppingCart.CART_KEY:
                     return p.parseCart();
                 case Trash.TRASH_KEY:
+                    System.out.println("TRASH");
                     return p.parseTrash();
                 case BarricadeBot.BARRICADE_ROBOT_KEY:
                     return p.parseBarricadeRobot();
@@ -234,6 +239,8 @@ public final class WorldModel
                     return p.parseHub(HUB_5_KEY);
                 case HUB_6_KEY:
                     return p.parseHub(HUB_6_KEY);
+                case Eve.EVE_KEY:
+                    return p.parseEve();
             }
         }
         return false;
