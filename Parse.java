@@ -187,9 +187,10 @@ public class Parse {
         if (this.properties.length == Trash.TRASH_NUM_PROPERTIES) {
             Point pt = new Point(Integer.parseInt(this.properties[Trash.TRASH_COL]),
                     Integer.parseInt(this.properties[Trash.TRASH_ROW]));
+            int health = Integer.parseInt(this.properties[Trash.TRASH_HEALTH]);
             Trash trash = new Trash(this.properties[Trash.TRASH_ID], pt,
                     imageStore.getImageList(Trash.TRASH_KEY),
-                    Integer.parseInt(this.properties[Trash.TRASH_ANIMATION_PERIOD]));
+                    Integer.parseInt(this.properties[Trash.TRASH_ANIMATION_PERIOD]), health);
             this.world.tryAddEntity(trash);
         }
         return this.properties.length == Trash.TRASH_NUM_PROPERTIES;
