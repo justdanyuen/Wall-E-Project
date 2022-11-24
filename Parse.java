@@ -176,6 +176,7 @@ public class Parse {
                     Integer.parseInt(this.properties[ShoppingCart.CART_ROW]));
             ShoppingCart cart = new ShoppingCart(this.properties[ShoppingCart.CART_ID], pt,
                     this.imageStore.getImageList(ShoppingCart.CART_KEY));
+            //System.out.println("CART CREATED");
             this.world.tryAddEntity(cart);
         }
 
@@ -184,19 +185,26 @@ public class Parse {
 
     public boolean parseTrash()
     {
-        System.out.println(this.properties.length == Trash.TRASH_NUM_PROPERTIES);
+        //System.out.println(this.properties.length == Trash.TRASH_NUM_PROPERTIES);
         if (this.properties.length == Trash.TRASH_NUM_PROPERTIES) {
             Point pt = new Point(Integer.parseInt(this.properties[Trash.TRASH_COL]),
                     Integer.parseInt(this.properties[Trash.TRASH_ROW]));
-            System.out.println(pt);
-            System.out.println("CREATING");
+
+//            System.out.println(pt);
+//            System.out.println(Trash.TRASH_ID);
+//            System.out.println(Trash.TRASH_KEY);
+//            System.out.println(Trash.TRASH_ANIMATION_PERIOD);
+//            System.out.println(Trash.TRASH_ACTION_PERIOD);
+            //System.out.println("CREATING");
+
             Trash trash = new Trash(this.properties[Trash.TRASH_ID],
                     pt,
                     this.imageStore.getImageList(Trash.TRASH_KEY),
                     Integer.parseInt(this.properties[Trash.TRASH_ANIMATION_PERIOD]),
                     Integer.parseInt(this.properties[Trash.TRASH_ACTION_PERIOD]),
-                    Integer.parseInt(this.properties[Trash.TRASH_HEALTH]));
-            System.out.println("TRASH CREATED");
+                    Trash.TRASH_HEALTH);
+
+            //System.out.println("TRASH CREATED");
             this.world.tryAddEntity(trash);
         }
         //System.out.println(" \n");
@@ -242,18 +250,7 @@ public class Parse {
         return this.properties.length == Robot.ROBOT_NUM_PROPERTIES;
     }
 
-    public boolean parseWalle()
-    {
-        if (this.properties.length == Walle.WALLE_NUM_PROPERTIES) {
-            Point pt = new Point(Integer.parseInt(this.properties[Walle.WALLE_COL]),
-                    Integer.parseInt(this.properties[Walle.WALLE_ROW]));
-            Walle walle = new Walle(this.properties[Walle.WALLE_ID], pt,
-                    imageStore.getImageList(Walle.WALLE_KEY),
-                    Integer.parseInt(this.properties[Walle.WALLE_ANIMATION_PERIOD]));
-            this.world.tryAddEntity(walle);
-        }
-        return this.properties.length == Walle.WALLE_NUM_PROPERTIES;
-    }
+
 
     public boolean parseRoach()
     {
@@ -299,6 +296,22 @@ public class Parse {
             this.world.tryAddEntity(eve);
         }
 
-        return this.properties.length == Tree.TREE_NUM_PROPERTIES;
+        return this.properties.length == Eve.EVE_NUM_PROPERTIES;
+    }
+
+    public boolean parseWalle()
+    {
+        if (this.properties.length == Walle.WALLE_NUM_PROPERTIES) {
+            Point pt = new Point(Integer.parseInt(this.properties[Walle.WALLE_COL]),
+                    Integer.parseInt(this.properties[Walle.WALLE_ROW]));
+            Walle walle = new Walle(this.properties[Walle.WALLE_ID],
+                    pt,
+                    imageStore.getImageList(Walle.WALLE_KEY),
+                    Integer.parseInt(this.properties[Walle.WALLE_ANIMATION_PERIOD]),
+                    Integer.parseInt(this.properties[Walle.WALLE_ACTION_PERIOD]));
+
+            this.world.tryAddEntity(walle);
+        }
+        return this.properties.length == Walle.WALLE_NUM_PROPERTIES;
     }
 }
