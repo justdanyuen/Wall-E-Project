@@ -311,7 +311,6 @@ background ship_floor 17 13
 background ship_floor 18 13
 background ship_floor 19 13
 
-
 barricade_robot barricade_robot_1_1 1 1 500
 barricade_robot barricade_robot_1_2 1 2 500
 barricade_robot barricade_robot_1_3 1 3 500
@@ -328,4 +327,4 @@ gopher_robot gopher_robot_13_11 13 13 500
 
 vacuum_robot vacuum_robot_11_5 11 5 500
 
-walle walle_1_7 1 7 100
+walle walle_1_7 1 7 50
