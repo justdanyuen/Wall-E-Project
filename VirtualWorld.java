@@ -238,15 +238,16 @@ public final class VirtualWorld extends PApplet
                 curP = p3;
             }
 
-            System.out.println(curP);
+            //System.out.println(curP);
             Entity walle = world.getOccupancyCell(curP); // start pos
 
-            System.out.println(walle);
+            //System.out.println(walle);
 
             Point newP = new Point(walle.getPosition().x + dx, walle.getPosition().y + dy);
 
             if ((world.getOccupancyCell(newP) == null || world.getOccupancyCell(newP).equals(Roach.class)) &&(newP.x > 0 && newP.x < VIEW_COLS - 1) && (newP.y > 0 && newP.y < VIEW_ROWS - 1)){
                 world.moveEntity(walle, newP);
+                world.removeEntityAt(new Point(1, 7));
             }
 
             if (scene1){
