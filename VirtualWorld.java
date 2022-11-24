@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.Optional;
+import java.util.Set;
 
 import processing.core.*;
 
@@ -25,9 +26,9 @@ public final class VirtualWorld extends PApplet
     public static final String DEFAULT_IMAGE_NAME = "background_default";
     public static final int DEFAULT_IMAGE_COLOR = 0x808080;
 
-    //public static String LOAD_FILE_NAME = "world.sav"; // scene 1
-    //public static String LOAD_FILE_NAME = "space.sav"; // scene 2
-    public static String LOAD_FILE_NAME = "earth2.sav"; // scene 3
+    //public static String LOAD_FILE_NAME = "earth1.sav"; // scene 1
+    public static String LOAD_FILE_NAME = "space.sav"; // scene 2
+    //public static String LOAD_FILE_NAME = "earth2.sav"; // scene 3
 
 
     public static final String FAST_FLAG = "-fast";
@@ -40,7 +41,7 @@ public final class VirtualWorld extends PApplet
     public static double timeScale = 1.0;
 
     public ImageStore imageStore;
-    public WorldModel world1;
+    public WorldModel world;
     public WorldModel world2;
     public WorldModel world3;
     public WorldView view;
@@ -59,6 +60,7 @@ public final class VirtualWorld extends PApplet
 
     // ignore this for now
     private SceneFactory s = new SceneFactory(); // needs to return a world model with everything setup??
+    private Scene curScene;
 
     public long nextTime;
 
@@ -75,18 +77,10 @@ public final class VirtualWorld extends PApplet
                                    DEFAULT_IMAGE_COLOR));
 
         // scenes
-        this.world1 = new WorldModel(WORLD_ROWS, WORLD_COLS,
+        this.world = new WorldModel(WORLD_ROWS, WORLD_COLS,
                                     createDefaultBackground(imageStore));
 
-        this.world2 = new WorldModel(WORLD_ROWS, WORLD_COLS,
-                createDefaultBackground(imageStore));
-
-        this.world3 = new WorldModel(WORLD_ROWS, WORLD_COLS,
-                createDefaultBackground(imageStore));
-
-        // this.world = SceneFactory.getWorldModel() ??
-
-        this.view = new WorldView(VIEW_ROWS, VIEW_COLS, this, world1, TILE_WIDTH,
+        this.view = new WorldView(VIEW_ROWS, VIEW_COLS, this, world, TILE_WIDTH,
                                   TILE_HEIGHT);
         this.scheduler = new EventScheduler(timeScale);
 
@@ -97,11 +91,27 @@ public final class VirtualWorld extends PApplet
         // key to scene change: load world
         // move to draw if wanting to change scene bc setup runs once
         // issue: draw runs 60x per second
-        loadWorld(world1, LOAD_FILE_NAME, imageStore); // scene 1
+        //if(scene3) {
+//            curScene = s.createScene("3");
+//            loadWorld(world, curScene.returnSceneFile(), imageStore); // scene 1
+        //}
+
+       // if(scene2) {
+//            curScene = s.createScene("2");
+//            loadWorld(world, curScene.returnSceneFile(), imageStore); // scene 1
+        //}
+
+        //if(scene1) {
+        curScene = s.createScene("1");
+        loadWorld(world, curScene.returnSceneFile(), imageStore); // scene 1
+        System.out.println(world.getEntities().size());
+        //}
+
+
         //loadWorld(world2, SCENE_2, imageStore); // scene 1
         //loadWorld(world3, SCENE_3, imageStore); // scene 1
 
-        scheduleActions(world1, scheduler, imageStore);
+        scheduleActions(world, scheduler, imageStore);
 
         // new additions
         // size(100, 30);
@@ -117,11 +127,47 @@ public final class VirtualWorld extends PApplet
             nextTime = time + TIMER_ACTION_PERIOD;
         }
 
+        if (scene2) {
+            drawScene2();
+
+        }
+        if (scene3) {
+            drawScene3();
+        }
+
+        scheduleActions(world, scheduler, imageStore);
         view.drawViewport();
 
         textSize(20);
-        text("SCORE: ", 10, 30);
+        text("SCORE: ", 10, 30); // add score system
     }
+
+    public void drawScene2(){
+        Object[] entities1 = world.getEntities().stream().toArray();
+        for (Object e : entities1){
+            if (e.getClass().equals(Entity.class)) {
+                world.removeEntity((Entity) e);
+            }
+        }
+
+        System.out.println(world.getEntities().size());
+        curScene = s.createScene("2");
+        loadWorld(world, curScene.returnSceneFile(), imageStore); // scene 1
+    }
+
+    public void drawScene3(){
+        Object[] entities1 = world.getEntities().stream().toArray();
+        for (Object e : entities1){
+            if (e.getClass().equals(Entity.class)) {
+                world.removeEntity((Entity) e);
+            }
+
+        }
+        System.out.println(world.getEntities().size());
+        curScene = s.createScene("3");
+        loadWorld(world, curScene.returnSceneFile(), imageStore); // scene 1
+    }
+
 
     // Just for debugging and for P5
     // Be sure to refactor this method as appropriate
@@ -129,7 +175,18 @@ public final class VirtualWorld extends PApplet
         Point pressed = mouseToPoint(mouseX, mouseY);
         System.out.println("CLICK! " + pressed.x + ", " + pressed.y);
 
-        Optional<Entity> entityOptional = world1.getOccupant(pressed);
+        if (pressed.x == 19 && pressed.y == 0){
+            scene1 = false;
+            scene2 = true;
+        }
+
+        if (pressed.x == 19 && pressed.y == 14){
+            scene2 = false;
+            scene3 = true;
+
+        }
+
+        Optional<Entity> entityOptional = world.getOccupant(pressed);
         if (entityOptional.isPresent())
         {
             Entity entity = entityOptional.get();
@@ -149,11 +206,14 @@ public final class VirtualWorld extends PApplet
         return view.getViewport().viewportToWorld(mouseX/TILE_WIDTH, mouseY/TILE_HEIGHT);
     }
 
+
     // change to only effect wall-e
     public void keyPressed() {
+        Scene curScene;
         if (key == CODED) {
             int dx = 0;
             int dy = 0;
+
 
             switch (keyCode) {
                 case UP:
@@ -171,30 +231,27 @@ public final class VirtualWorld extends PApplet
             }
 
             //view.shiftView(dx, dy);
-            Point curP;
+            Point curP = null;
             if(scene1){
                 curP = p1;
-            } else if (scene2 || scene3) {
+            }
+            if(scene2 || scene3){
                 curP = p2;
             }
-            else{
-                curP = null;
-            }
-
-            Entity walle = world1.getOccupancyCell(curP); // start pos
+            System.out.println(curP);
+            Entity walle = world.getOccupancyCell(curP); // start pos
+            System.out.println(walle);
 
             Point newP = new Point(walle.getPosition().x + dx, walle.getPosition().y + dy);
 
-            if ((world1.getOccupancyCell(newP) == null || world1.getOccupancyCell(newP).equals(Fairy.class)) &&(newP.x > 0 && newP.x < VIEW_COLS - 1) && (newP.y > 0 && newP.y < VIEW_ROWS - 1)){
-                world1.moveEntity(walle, newP);
+            if ((world.getOccupancyCell(newP) == null || world.getOccupancyCell(newP).equals(Roach.class)) &&(newP.x > 0 && newP.x < VIEW_COLS - 1) && (newP.y > 0 && newP.y < VIEW_ROWS - 1)){
+                world.moveEntity(walle, newP);
             }
             if (scene1){
                 p1 = new Point(walle.getPosition().x, walle.getPosition().y);
             } else if (scene2 || scene3) {
                 p2 = new Point(walle.getPosition().x, walle.getPosition().y);
             }
-
-            //e = world.getOccupant(new Point(e.getPosition().x + dx, e.getPosition().y + dy));
         }
     }
 

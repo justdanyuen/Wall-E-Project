@@ -195,13 +195,39 @@ public class Parse {
         return this.properties.length == Trash.TRASH_NUM_PROPERTIES;
     }
 
-    public boolean parseRobot()
+    public boolean parseBarricadeRobot()
     {
         if (this.properties.length == Robot.ROBOT_NUM_PROPERTIES) {
             Point pt = new Point(Integer.parseInt(this.properties[Robot.ROBOT_COL]),
                     Integer.parseInt(this.properties[Robot.ROBOT_ROW]));
             Robot robot = new Robot(this.properties[Robot.ROBOT_ID], pt,
-                    imageStore.getImageList(Robot.ROBOT_KEY),
+                    imageStore.getImageList(BarricadeBot.BARRICADE_ROBOT_KEY),
+                    Integer.parseInt(this.properties[Robot.ROBOT_ANIMATION_PERIOD]));
+            this.world.tryAddEntity(robot);
+        }
+        return this.properties.length == Robot.ROBOT_NUM_PROPERTIES;
+    }
+
+    public boolean parseGopherRobot()
+    {
+        if (this.properties.length == Robot.ROBOT_NUM_PROPERTIES) {
+            Point pt = new Point(Integer.parseInt(this.properties[Robot.ROBOT_COL]),
+                    Integer.parseInt(this.properties[Robot.ROBOT_ROW]));
+            Robot robot = new Robot(this.properties[Robot.ROBOT_ID], pt,
+                    imageStore.getImageList(GopherBot.GOPHER_ROBOT_KEY),
+                    Integer.parseInt(this.properties[Robot.ROBOT_ANIMATION_PERIOD]));
+            this.world.tryAddEntity(robot);
+        }
+        return this.properties.length == Robot.ROBOT_NUM_PROPERTIES;
+    }
+
+    public boolean parseVacuumRobot()
+    {
+        if (this.properties.length == Robot.ROBOT_NUM_PROPERTIES) {
+            Point pt = new Point(Integer.parseInt(this.properties[Robot.ROBOT_COL]),
+                    Integer.parseInt(this.properties[Robot.ROBOT_ROW]));
+            Robot robot = new Robot(this.properties[Robot.ROBOT_ID], pt,
+                    imageStore.getImageList(VacuumBot.VACUUM_ROBOT_KEY),
                     Integer.parseInt(this.properties[Robot.ROBOT_ANIMATION_PERIOD]));
             this.world.tryAddEntity(robot);
         }
@@ -219,5 +245,35 @@ public class Parse {
             this.world.tryAddEntity(walle);
         }
         return this.properties.length == Walle.WALLE_NUM_PROPERTIES;
+    }
+
+    public boolean parseRoach()
+    {
+        if (this.properties.length == Roach.ROACH_NUM_PROPERTIES) {
+            Point pt = new Point(Integer.parseInt(this.properties[Roach.ROACH_COL]),
+                    Integer.parseInt(this.properties[Roach.ROACH_ROW]));
+            Roach roach = new Roach(this.properties[Roach.ROACH_ID],
+                    pt,
+                    imageStore.getImageList(Roach.ROACH_KEY),
+                    Integer.parseInt(properties[Roach.ROACH_ANIMATION_PERIOD]),
+                    Integer.parseInt(properties[Roach.ROACH_ACTION_PERIOD])
+            );
+            this.world.tryAddEntity(roach);
+        }
+
+        return this.properties.length == Roach.ROACH_NUM_PROPERTIES;
+    }
+
+    public boolean parseHub(String key)
+    {
+        if (this.properties.length == Hub.HUB_NUM_PROPERTIES) {
+            Point pt = new Point(Integer.parseInt(this.properties[Hub.HUB_COL]),
+                    Integer.parseInt(this.properties[Hub.HUB_ROW]));
+            Hub hub = new Hub(this.properties[Hub.HUB_ID], pt,
+                    this.imageStore.getImageList(key));
+            this.world.tryAddEntity(hub);
+        }
+
+        return this.properties.length == Hub.HUB_NUM_PROPERTIES;
     }
 }

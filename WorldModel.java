@@ -28,10 +28,21 @@ public final class WorldModel
 
     public static final String PIPE_E_KEY = "pipe_e";
 
-    public static final String SIGN_SHORT_KEY = "sign_short";
+    public static final String SIGN_SHORT_KEY1 = "sign_short_lt";
+    public static final String SIGN_SHORT_KEY2 = "sign_short_rt";
+    public static final String SIGN_SHORT_KEY3 = "sign_short_lb";
+    public static final String SIGN_SHORT_KEY4 = "sign_short_rb";
 
-    public static final String SIGN_LONG_KEY = "sign_long";
+    public static final String SIGN_LONG_KEY1 = "sign_long_b";
+    public static final String SIGN_LONG_KEY2 = "sign_long_m";
+    public static final String SIGN_LONG_KEY3 = "sign_long_e";
 
+    public static final String HUB_1_KEY = "hub1";
+    public static final String HUB_2_KEY = "hub2";
+    public static final String HUB_3_KEY = "hub3";
+    public static final String HUB_4_KEY = "hub4";
+    public static final String HUB_5_KEY = "hub5";
+    public static final String HUB_6_KEY = "hub6";
 
 
     public WorldModel(int numRows, int numCols, Background defaultBackground) {
@@ -183,18 +194,46 @@ public final class WorldModel
                     return p.parsePipe(PIPE_E_KEY);
                 case Tires.TIRES_KEY:
                     return p.parseTires();
-                case SIGN_LONG_KEY:
-                    return p.parseSign(SIGN_LONG_KEY);
-                case SIGN_SHORT_KEY:
-                    return p.parseSign(SIGN_SHORT_KEY);
+                case SIGN_LONG_KEY1:
+                    return p.parseSign(SIGN_LONG_KEY1);
+                case SIGN_LONG_KEY2:
+                    return p.parseSign(SIGN_LONG_KEY2);
+                case SIGN_LONG_KEY3:
+                    return p.parseSign(SIGN_LONG_KEY3);
+                case SIGN_SHORT_KEY1:
+                    return p.parseSign(SIGN_SHORT_KEY1);
+                case SIGN_SHORT_KEY2:
+                    return p.parseSign(SIGN_SHORT_KEY2);
+                case SIGN_SHORT_KEY3:
+                    return p.parseSign(SIGN_SHORT_KEY3);
+                case SIGN_SHORT_KEY4:
+                    return p.parseSign(SIGN_SHORT_KEY4);
                 case ShoppingCart.CART_KEY:
                     return p.parseCart();
                 case Trash.TRASH_KEY:
                     return p.parseTrash();
-                case Robot.ROBOT_KEY:
-                    return p.parseRobot();
+                case BarricadeBot.BARRICADE_ROBOT_KEY:
+                    return p.parseBarricadeRobot();
+                case GopherBot.GOPHER_ROBOT_KEY:
+                    return p.parseGopherRobot();
+                case VacuumBot.VACUUM_ROBOT_KEY:
+                    return p.parseVacuumRobot();
                 case Walle.WALLE_KEY:
                     return p.parseWalle();
+                case Roach.ROACH_KEY:
+                    return p.parseRoach();
+                case HUB_1_KEY:
+                    return p.parseHub(HUB_1_KEY);
+                case HUB_2_KEY:
+                    return p.parseHub(HUB_2_KEY);
+                case HUB_3_KEY:
+                    return p.parseHub(HUB_3_KEY);
+                case HUB_4_KEY:
+                    return p.parseHub(HUB_4_KEY);
+                case HUB_5_KEY:
+                    return p.parseHub(HUB_5_KEY);
+                case HUB_6_KEY:
+                    return p.parseHub(HUB_6_KEY);
             }
         }
         return false;

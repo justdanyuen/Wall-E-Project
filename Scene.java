@@ -1,11 +1,10 @@
-import processing.core.PApplet;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public interface Scene {
     String returnSceneFile();
+
 
 //    static void loadWorld(
 //            WorldModel world, String filename, ImageStore imageStore)

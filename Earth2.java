@@ -1,5 +1,7 @@
 public class Earth2 implements Scene{
     public String returnSceneFile() {
-        return "Earth2";
+        return "earth2.sav";
     }
+
+
 }

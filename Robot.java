@@ -2,7 +2,7 @@ import processing.core.PImage;
 
 import java.util.List;
 
-public class Robot extends Animated{
+public class Robot extends AnimatedObstacle{
     public static final String ROBOT_KEY = "robot";
     public static final int ROBOT_NUM_PROPERTIES = 5;
     public static final int ROBOT_ID = 1;

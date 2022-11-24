@@ -5,10 +5,10 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Earth1 implements Scene{
-
     public String returnSceneFile() {
-        return "Earth1";
+        return "earth1.sav";
     }
+
 
 
 
