@@ -7,7 +7,6 @@ ship_wall images/ShipWall.png
 
 background_default images/none.bmp
 
-
 pipe_b images/Pipe1.png
 pipe_m images/Pipe2.png
 pipe_e images/Pipe3.png
@@ -16,8 +15,14 @@ tires images/Tires.png
 
 shopping_cart images/ShoppingCart.png
 
-sign_short images/BuyNLarge.png
-sign_long images/BuyNLargeLong-01.png
+sign_short_lt images/BuyNLargeSquare1.png
+sign_short_rt images/BuyNLargeSquare2.png
+sign_short_lb images/BuyNLargeSquare3.png
+sign_short_rb images/BuyNLargeSquare4.png
+
+sign_long_b images/BuyNLargeLong1.png
+sign_long_m images/BuyNLargeLong2.png
+sign_long_e images/BuyNLargeLong3.png
 
 dude images/WALLE1.png
 dude images/WALLE2.png
@@ -38,6 +43,15 @@ fairy images/Plant.png
 fairy images/Plant.png
 fairy images/Plant.png
 
+roach images/Roach1.png
+roach images/Roach2.png
+roach images/Roach3.png
+roach images/Roach4.png
+roach images/Roach5.png
+roach images/Roach6.png
+roach images/Roach7.png
+roach images/Roach8.png
+
 sapling images/Pipe1.png
 sapling images/Pipe1.png
 sapling images/Pipe1.png
@@ -49,7 +63,19 @@ trash images/Trash2.png
 trash images/Trash3.png
 trash images/Trash1.png
 
-robot images/BaracadeBot1.png
-robot images/BaracadeBot2.png
-robot images/BaracadeBot1.png
-robot images/BaracadeBot2.png
+barricade_robot images/BaracadeBot1.png
+barricade_robot images/BaracadeBot2.png
+
+gopher_robot images/GopherBot1.png
+gopher_robot images/GopherBot2.png
+
+vacuum_robot images/VacuumBot1.png
+vacuum_robot images/VacuumBot2.png
+vacuum_robot images/VacuumBot3.png
+
+hub1 images/Hub1.png
+hub2 images/Hub2.png
+hub3 images/Hub3.png
+hub4 images/Hub4.png
+hub5 images/Hub5.png
+hub6 images/Hub6.png

@@ -311,18 +311,21 @@ background ship_floor 17 13
 background ship_floor 18 13
 background ship_floor 19 13
 
-dude dude_0_7 1 7 3 848 100
 
-robot robot_1_1 1 1 500
-robot robot_1_2 1 2 500
-robot robot_1_3 1 3 500
+barricade_robot barricade_robot_1_1 1 1 500
+barricade_robot barricade_robot_1_2 1 2 500
+barricade_robot barricade_robot_1_3 1 3 500
 
-robot robot_2_6 2 6 500
-robot robot_2_7 2 7 500
-robot robot_2_8 2 8 500
+barricade_robot barricade_robot_2_6 2 6 500
+barricade_robot barricade_robot_2_7 2 7 500
+barricade_robot barricade_robot_2_8 2 8 500
 
-robot robot_3_11 3 11 500
-robot robot_3_11 3 12 500
-robot robot_3_11 3 13 500
+barricade_robot barricade_robot_3_11 3 11 500
+barricade_robot barricade_robot_3_12 3 12 500
+barricade_robot barricade_robot_3_13 3 13 500
 
+gopher_robot gopher_robot_13_11 13 13 500
 
+vacuum_robot vacuum_robot_11_5 11 5 500
+
+walle walle_1_7 1 7 100
