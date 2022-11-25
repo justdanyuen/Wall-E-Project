@@ -236,6 +236,8 @@ public final class WorldModel
                     return p.parseHub(HUB_6_KEY);
                 case Eve.EVE_KEY:
                     return p.parseEve();
+                case Auto.AUTO_KEY:
+                    return p.parseAuto();
             }
         }
         return false;

@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public class Auto extends ActionEntity implements Moveable{
 
-    public static final String AUTO_KEY = "eve";
+    public static final String AUTO_KEY = "auto";
     public static final int AUTO_NUM_PROPERTIES = 6;
     public static final int AUTO_ID = 1;
     public static final int AUTO_COL = 2;
@@ -17,7 +17,7 @@ public class Auto extends ActionEntity implements Moveable{
 
     //public static final AStarPathingStrategy a = new AStarPathingStrategy();
 
-    private PathingStrategy pathingStrategy = null;
+    private PathingStrategy pathingStrategy = new AStarPathingStrategy();
 
     public Auto(String id, Point position, List<PImage> images, int animationPeriod, int actionPeriod){
         super(id, position, images, animationPeriod, actionPeriod);

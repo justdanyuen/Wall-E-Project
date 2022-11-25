@@ -278,4 +278,21 @@ public class Parse {
         }
         return this.properties.length == Walle.WALLE_NUM_PROPERTIES;
     }
+
+    public boolean parseAuto()
+    {
+        if (this.properties.length == Auto.AUTO_NUM_PROPERTIES) {
+            Point pt = new Point(Integer.parseInt(this.properties[Auto.AUTO_COL]),
+                    Integer.parseInt(this.properties[Auto.AUTO_ROW]));
+            Auto auto = new Auto(this.properties[Auto.AUTO_ID],
+                    pt,
+                    imageStore.getImageList(Auto.AUTO_KEY),
+                    Integer.parseInt(properties[Auto.AUTO_ANIMATION_PERIOD]),
+                    Integer.parseInt(properties[Auto.AUTO_ACTION_PERIOD]));
+
+            this.world.tryAddEntity(auto);
+        }
+
+        return this.properties.length == Auto.AUTO_NUM_PROPERTIES;
+    }
 }
