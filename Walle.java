@@ -43,7 +43,15 @@ public class Walle extends ActionEntity{
     }
 
     public boolean reachedEve(Point eve){
-        if (this.getPosition().equals(eve)){
+        Point p1 = new Point(eve.x - 1, eve.y);
+        Point p2 = new Point(eve.x + 1, eve.y);
+        Point p3 = new Point(eve.x, eve.y - 1);
+        Point p4 = new Point(eve.x, eve.y + 1);
+        if (this.getPosition().equals(p1) ||
+                this.getPosition().equals(p2) ||
+                this.getPosition().equals(p3) ||
+                this.getPosition().equals(p4))
+        {
             return true;
         }
         return false;

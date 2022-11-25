@@ -129,11 +129,26 @@ public final class VirtualWorld extends PApplet
             nextTime = time + TIMER_ACTION_PERIOD;
         }
 
-        if (((Walle)walle).reachedEve(eve.getPosition()) || scene2) {
+//        while(!((Walle)walle).reachedEve(eve.getPosition())){
+//            eve.setPosition(new Point (eve.getPosition().x - 1, eve.getPosition().y + 1));
+//        }
+
+        if (((Walle)walle).reachedEve(eve.getPosition()) && scene2 == false) {
+            scene2 = true;
+            walle.setPosition(new Point(1, 7));
+            // set eve to new pos
+            eve.setPosition(new Point(18, 11));
+
             drawScene2();
         }
 
-        else if (((Walle)walle).reachedEve(eve.getPosition()) || scene3) {
+        else if (((Walle)walle).reachedEve(eve.getPosition()) && scene2 == true && scene3 == false) {
+            //scene2 = false;
+            scene3 = true;
+            walle.setPosition(new Point(1, 7));
+            // set eve to new pos
+            eve.setPosition(new Point(2, 7));
+            ((Eve)eve).setPathingStrategy(new AStarPathingStrategy());
             drawScene3();
         }
 
@@ -196,9 +211,7 @@ public final class VirtualWorld extends PApplet
             scene1 = false;
             scene2 = true;
 
-            walle.setPosition(new Point(1, 7));
-            // set eve to new pos
-            eve.setPosition(new Point(18, 11));
+
         }
 
         if (pressed.x == 19 && pressed.y == 14){
