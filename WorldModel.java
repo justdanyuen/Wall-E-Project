@@ -180,10 +180,6 @@ public final class WorldModel
             switch (properties[PROPERTY_KEY]) {
                 case BGND_KEY:
                     return p.parseBackground();
-                case Dude.DUDE_KEY:
-                    return p.parseDude();
-                case  Fairy.FAIRY_KEY:
-                    return p.parseFairy();
                 case House.HOUSE_KEY:
                     return p.parseHouse();
                 case Tree.TREE_KEY:

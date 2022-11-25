@@ -66,42 +66,6 @@ public class Parse {
         return this.properties.length == Tree.TREE_NUM_PROPERTIES;
     }
 
-    public boolean parseFairy()
-    {
-        if (this.properties.length == Fairy.FAIRY_NUM_PROPERTIES) {
-            Point pt = new Point(Integer.parseInt(this.properties[Fairy.FAIRY_COL]),
-                    Integer.parseInt(this.properties[Fairy.FAIRY_ROW]));
-            Fairy fairy = new Fairy(this.properties[Fairy.FAIRY_ID],
-                    pt,
-                    imageStore.getImageList(Fairy.FAIRY_KEY),
-                    Integer.parseInt(properties[Fairy.FAIRY_ANIMATION_PERIOD]),
-                    Integer.parseInt(properties[Fairy.FAIRY_ACTION_PERIOD])
-            );
-            this.world.tryAddEntity(fairy);
-        }
-
-        return this.properties.length == Fairy.FAIRY_NUM_PROPERTIES;
-    }
-
-    public boolean parseDude()
-    {
-        if (this.properties.length == Dude.DUDE_NUM_PROPERTIES) {
-            Point pt = new Point(Integer.parseInt(this.properties[Dude.DUDE_COL]),
-                    Integer.parseInt(this.properties[Dude.DUDE_ROW]));
-
-            DudeNotFull dude = new DudeNotFull(this.properties[Dude.DUDE_ID],
-                    pt,
-                    this.imageStore.getImageList(Dude.DUDE_KEY),
-                    Integer.parseInt(properties[Dude.DUDE_ANIMATION_PERIOD]),
-                    Integer.parseInt(properties[Dude.DUDE_ACTION_PERIOD]),
-                    Integer.parseInt(properties[Dude.DUDE_LIMIT]),
-                    0);
-
-            world.tryAddEntity(dude);
-        }
-
-        return this.properties.length == Dude.DUDE_NUM_PROPERTIES;
-    }
 
     public boolean parseSapling()
     {

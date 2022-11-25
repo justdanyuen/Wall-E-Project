@@ -273,45 +273,5 @@ class AStarPathingStrategy
         return g + h;
     }
 
-    public static final Function<Point, Stream<Point>> DIAGONAL_NEIGHBORS =
-            point ->
-                    Stream.<Point>builder()
-                            .add(new Point(point.x - 1, point.y - 1))
-                            .add(new Point(point.x + 1, point.y + 1))
-                            .add(new Point(point.x - 1, point.y + 1))
-                            .add(new Point(point.x + 1, point.y - 1))
-                            .build();
 
-    public static final Function<Point, Stream<Point>> DIAGONAL_CARDINAL_NEIGHBORS =
-            point ->
-                    Stream.<Point>builder()
-                            .add(new Point(point.x - 1, point.y - 1))
-                            .add(new Point(point.x + 1, point.y + 1))
-                            .add(new Point(point.x - 1, point.y + 1))
-                            .add(new Point(point.x + 1, point.y - 1))
-                            .add(new Point(point.x, point.y - 1))
-                            .add(new Point(point.x, point.y + 1))
-                            .add(new Point(point.x - 1, point.y))
-                            .add(new Point(point.x + 1, point.y))
-                            .build();
-
-    public static boolean withinBounds(Point p)
-    {
-        return p.y >= 0 && p.y < 14 &&
-                p.x >= 0 && p.x < 19;
-    }
-
-    public static boolean neighbors(Point p1, Point p2)
-    {
-        return p1.x+1 == p2.x && p1.y == p2.y ||
-                p1.x-1 == p2.x && p1.y == p2.y ||
-                p1.x == p2.x && p1.y+1 == p2.y ||
-                p1.x == p2.x && p1.y-1 == p2.y;
-
-        //added neighbor testing for diagonals
-//             p1.x-1 == p2.x && p1.y-1 == p2.y ||
-//             p1.x+1 == p2.x && p1.y+1 == p2.y ||
-//             p1.x+1 == p2.x && p1.y-1 == p2.y ||
-//             p1.x-1 == p2.x && p1.y+1 == p2.y;
-    }
 }

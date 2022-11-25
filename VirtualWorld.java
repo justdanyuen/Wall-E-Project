@@ -66,7 +66,12 @@ public final class VirtualWorld extends PApplet
     private Object[] entities2;
 
     private Entity walle;
-    private Point start;
+    private Entity eve;
+
+    private Entity roach;
+    private Point startW;
+    private Point startE;
+    private Point startR;
 
     // ignore this for now
 
@@ -103,8 +108,15 @@ public final class VirtualWorld extends PApplet
         // store all entities currently in the world
         entities1 = world.getEntities().stream().toArray();
 
-        start = new Point(4, 3);
-        walle = world.getOccupancyCell(start); // start pos
+        startW = new Point(4, 3);
+        walle = world.getOccupancyCell(startW); // start pos
+
+        startR = new Point(0, 0);
+        roach = world.getOccupancyCell(startR); // start pos
+
+        startE = new Point(19, 2);
+        eve = world.getOccupancyCell(startE);
+        ((Eve)eve).setPathingStrategy(new Stationary());
 
 
         nextTime = System.currentTimeMillis() + TIMER_ACTION_PERIOD;
@@ -117,15 +129,11 @@ public final class VirtualWorld extends PApplet
             nextTime = time + TIMER_ACTION_PERIOD;
         }
 
-//        if (scene1){
-//            drawScene1();
-//        }
-
-        if (scene2) {
+        if (((Walle)walle).reachedEve(eve.getPosition()) || scene2) {
             drawScene2();
         }
 
-        else if (scene3) {
+        else if (((Walle)walle).reachedEve(eve.getPosition()) || scene3) {
             drawScene3();
         }
 
@@ -142,37 +150,35 @@ public final class VirtualWorld extends PApplet
 
         //System.out.println(world.getEntities().size());
         curScene = s.createScene("2");
+        ((Roach)roach).setPathingStrategy(new Stationary());
 
         for (Object e : entities1){
             //System.out.println(e.getClass());
-            if (e instanceof Entity && !e.getClass().equals(Roach.class) && !e.getClass().equals(Walle.class)) {
+            if (e instanceof Entity
+                    && !e.getClass().equals(Walle.class)
+                    && !e.getClass().equals(Eve.class)) {
                 world.removeEntity((Entity) e);
             }
         }
 
         loadWorld(world, curScene.returnSceneFile(), imageStore); // scene 1
-//        world.addEntity(new Walle(
-//                "walle_1_7",
-//                new Point(1, 7),
-//                imageStore.getImageList(Walle.WALLE_KEY),
-//                Walle.WALLE_ANIMATION_PERIOD,
-//                Walle.WALLE_ACTION_PERIOD));
 
         entities2 = world.getEntities().stream().toArray();
-
+        scheduleActions(world, scheduler, imageStore);
     }
 
     public void drawScene3(){
-        //System.out.println(world.getEntities().size());
         curScene = s.createScene("3");
-
 
         for (Object e : entities2){
             System.out.println(e.getClass());
-            if (e instanceof Entity && !e.getClass().equals(Roach.class) && !e.getClass().equals(Walle.class)) {
+            if (e instanceof Entity
+                    && !e.getClass().equals(Walle.class)
+                    && !e.getClass().equals(Eve.class)){
                 world.removeEntity((Entity) e);
             }
         }
+
 
         loadWorld(world, curScene.returnSceneFile(), imageStore); // scene 1
         scheduleActions(world, scheduler, imageStore);
@@ -189,7 +195,10 @@ public final class VirtualWorld extends PApplet
         if (pressed.x == 19 && pressed.y == 0){
             scene1 = false;
             scene2 = true;
+
             walle.setPosition(new Point(1, 7));
+            // set eve to new pos
+            eve.setPosition(new Point(18, 11));
         }
 
         if (pressed.x == 19 && pressed.y == 14){
@@ -197,6 +206,9 @@ public final class VirtualWorld extends PApplet
             scene2 = false;
             scene3 = true;
             walle.setPosition(new Point(1, 7));
+            // set eve to new pos
+            eve.setPosition(new Point(2, 7));
+            ((Eve)eve).setPathingStrategy(new AStarPathingStrategy());
 
         }
 
@@ -223,7 +235,7 @@ public final class VirtualWorld extends PApplet
 
     // change to only effect wall-e
     public void keyPressed() {
-        Scene curScene;
+
         if (key == CODED) {
             int dx = 0;
             int dy = 0;
@@ -244,32 +256,8 @@ public final class VirtualWorld extends PApplet
                     break;
             }
 
-            //view.shiftView(dx, dy);
-            //System.out.println(newP);
-//            if(scene1){
-//                curP = p1;
-//            }
-//            if(scene2){
-//                curP = p2;
-//            }
-//            if (scene3){
-//                curP = p3;
-//            }
-            if(scene2){
-                System.out.println("SCENE2");
-
-
-            }
-            else if(scene3){
-                System.out.println("SCENE2");
-                //walle.setPosition(new Point(1, 7));
-
-            }
 
             Point newP = new Point(walle.getPosition().x + dx, walle.getPosition().y + dy);
-            System.out.println(newP);
-           // walle = world.getOccupancyCell(newP); // start pos
-            System.out.println(walle.getPosition());
 
             if ((!world.isOccupied(newP)
                     || (world.isOccupied(newP) && world.getOccupancyCell(newP).getClass().equals(Trash.class)))
@@ -278,8 +266,6 @@ public final class VirtualWorld extends PApplet
                 world.moveEntity(walle,newP);
                 System.out.println(walle.getPosition());
             }
-
-
         }
     }
 

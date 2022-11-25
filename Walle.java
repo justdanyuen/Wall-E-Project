@@ -31,10 +31,6 @@ public class Walle extends ActionEntity{
     }
 
 
-//    public void incrementScore(){
-//        score += 1;
-//    }
-
     public int getScore(){
         return score;
     }
@@ -48,8 +44,6 @@ public class Walle extends ActionEntity{
 
     public boolean reachedEve(Point eve){
         if (this.getPosition().equals(eve)){
-            changeScene = true;
-
             return true;
         }
         return false;
@@ -65,10 +59,14 @@ public class Walle extends ActionEntity{
 
         for (Object e : entities){
             if (e.getClass().equals(Trash.class)){
-                //world.removeEntity((Trash)e);
-                ((Trash)e).updateHealth(-1); // subtract from health
-                ((Trash)e).transform(world, scheduler, imageStore);
-                score++;
+                if (this.getPosition().equals(((Trash) e).getPosition())) {
+                    //world.removeEntity((Trash)e);
+                    ((Trash) e).updateHealth(-1); // subtract from health
+
+                    ((Trash) e).transform(world, scheduler, imageStore);
+                    score++;
+                    System.out.println(score);
+                }
             }
         }
 
@@ -78,16 +76,5 @@ public class Walle extends ActionEntity{
         // check if scene needs to be changes - Walle reached Eve
     }
 
-    public void moveWalle(WorldModel world, Point p){
-
-        if ((!world.isOccupied(p)
-                || (world.isOccupied(p) && world.getOccupancyCell(p).getClass().equals(Trash.class)))
-                && (p.x > 0 && p.x < VirtualWorld.VIEW_COLS - 1) && (p.y > 0 && p.y < VirtualWorld.VIEW_ROWS - 1)){
-            world.moveEntity(this, p);
-
-            //world.removeEntityAt(new Point(1, 7));
-        }
-        this.setPosition(new Point(this.getPosition().x + p.x, this.getPosition().y + p.y));
-    }
 
 }
