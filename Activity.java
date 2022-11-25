@@ -7,6 +7,7 @@ public class Activity implements Action{
         this.world = world;
         this.imageStore = imageStore;
     }
+
     public void executeAction(EventScheduler scheduler)
     {
         entity.executeActivity(this.world, this.imageStore, scheduler);

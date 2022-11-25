@@ -60,7 +60,7 @@ public final class VirtualWorld extends PApplet
     private boolean scene2 = false; // space
     private boolean scene3 = false; // earth2
 
-
+    private boolean addedEve = false; // earth2
 
     private Object[] entities1;
     private Object[] entities2;
@@ -114,9 +114,9 @@ public final class VirtualWorld extends PApplet
         startR = new Point(0, 0);
         roach = world.getOccupancyCell(startR); // start pos
 
-        startE = new Point(19, 2);
-        eve = world.getOccupancyCell(startE);
-        ((Eve)eve).setPathingStrategy(new Stationary());
+//        startE = new Point(19, 0);
+//        eve = world.getOccupancyCell(startE);
+//        ((Eve)eve).setPathingStrategy(new Stationary());
 
 
         nextTime = System.currentTimeMillis() + TIMER_ACTION_PERIOD;
@@ -129,11 +129,33 @@ public final class VirtualWorld extends PApplet
             nextTime = time + TIMER_ACTION_PERIOD;
         }
 
-//        while(!((Walle)walle).reachedEve(eve.getPosition())){
-//            eve.setPosition(new Point (eve.getPosition().x - 1, eve.getPosition().y + 1));
-//        }
+        for(Object e : entities1){
+            if (e instanceof Entity && e.getClass().equals(Trash.class)){
+                if (((Walle)walle).isAtTrash(((Trash) e).getPosition())){
+                    ((Walle)walle).updateScore();
+                    world.removeEntity((Entity)e);
+                }
+            }
+        }
 
-        if (((Walle)walle).reachedEve(eve.getPosition()) && scene2 == false) {
+        if (((Walle)walle).getScore() >= 5 && scene1 == true && !addedEve){
+            Entity eve = new Eve("eve",
+                    new Point(19, 1),
+                    imageStore.getImageList(Eve.EVE_KEY),
+                    Eve.EVE_ANIMATION_PERIOD,
+                    Eve.EVE_ACTION_PERIOD);
+            ((Eve)eve).setPathingStrategy(new Stationary());
+            world.addEntity(eve);
+
+            addedEve = true;
+            ((Walle)walle).setScore(0);
+        }
+
+        startE = new Point(19, 1);
+        eve = world.getOccupancyCell(startE);
+
+        if (addedEve && ((Walle)walle).reachedEve(eve.getPosition()) && scene1 == true) {
+            scene1 = false;
             scene2 = true;
             walle.setPosition(new Point(1, 7));
             // set eve to new pos
@@ -142,8 +164,8 @@ public final class VirtualWorld extends PApplet
             drawScene2();
         }
 
-        else if (((Walle)walle).reachedEve(eve.getPosition()) && scene2 == true && scene3 == false) {
-            //scene2 = false;
+       else if (addedEve && ((Walle)walle).reachedEve(eve.getPosition()) && scene2 == true) {
+            scene2 = false;
             scene3 = true;
             walle.setPosition(new Point(1, 7));
             // set eve to new pos
@@ -155,8 +177,8 @@ public final class VirtualWorld extends PApplet
         scheduleActions(world, scheduler, imageStore);
         view.drawViewport();
 
-        textSize(20);
-        text("SCORE: ", 10, 30); // add score system
+        //textSize(20);
+        //text("SCORE: " + ((Walle)walle).getScore(), 10, 30); // add score system
     }
 
     public void drawScene2(){
@@ -206,25 +228,6 @@ public final class VirtualWorld extends PApplet
         Point pressed = mouseToPoint(mouseX, mouseY);
         System.out.println("CLICK! " + pressed.x + ", " + pressed.y);
 
-        // JUST TEMPORARY - check if scene change can happen
-        if (pressed.x == 19 && pressed.y == 0){
-            scene1 = false;
-            scene2 = true;
-
-
-        }
-
-        if (pressed.x == 19 && pressed.y == 14){
-            scene1 = false;
-            scene2 = false;
-            scene3 = true;
-            walle.setPosition(new Point(1, 7));
-            // set eve to new pos
-            eve.setPosition(new Point(2, 7));
-            ((Eve)eve).setPathingStrategy(new AStarPathingStrategy());
-
-        }
-
         Optional<Entity> entityOptional = world.getOccupant(pressed);
         if (entityOptional.isPresent())
         {
@@ -272,12 +275,11 @@ public final class VirtualWorld extends PApplet
 
             Point newP = new Point(walle.getPosition().x + dx, walle.getPosition().y + dy);
 
-            if ((!world.isOccupied(newP)
-                    || (world.isOccupied(newP) && world.getOccupancyCell(newP).getClass().equals(Trash.class)))
-                    && (newP.x > 0 && newP.x < VIEW_COLS - 1) && (newP.y > 0 && newP.y < VIEW_ROWS - 1)){
+            if (!world.isOccupied(newP)
+                    && ((newP.x > 0 && newP.x < VIEW_COLS - 1) && (newP.y > 0 && newP.y < VIEW_ROWS - 1))){
 
                 world.moveEntity(walle,newP);
-                System.out.println(walle.getPosition());
+                //System.out.println(walle.getPosition());
             }
         }
     }

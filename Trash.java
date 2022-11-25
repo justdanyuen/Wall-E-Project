@@ -27,6 +27,7 @@ public class Trash extends ActionEntity{
     public void updateHealth(int n) {
         this.health += n;
     }
+
     public boolean transform(
             WorldModel world,
             EventScheduler scheduler,
@@ -38,7 +39,6 @@ public class Trash extends ActionEntity{
             System.out.println("TRASH REMOVED");
             return true;
         }
-
         return false;
     }
 

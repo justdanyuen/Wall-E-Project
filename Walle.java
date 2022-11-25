@@ -13,7 +13,6 @@ public class Walle extends ActionEntity{
 
     private int score = 0;
 
-    private static boolean changeScene = false;
 
     public Walle(String id, Point position, List<PImage> images, int animationPeriod, int actionPeriod){
         super(id, position, images, animationPeriod, actionPeriod);
@@ -35,8 +34,25 @@ public class Walle extends ActionEntity{
         return score;
     }
 
+    public void updateScore(){
+        score++;
+    }
+
+    public void setScore(int n){
+        score = n;
+    }
+
     public boolean isAtTrash(Point trash){
-        if (this.getPosition().equals(trash)){
+        Point p1 = new Point(trash.x - 1, trash.y);
+        Point p2 = new Point(trash.x + 1, trash.y);
+        Point p3 = new Point(trash.x, trash.y - 1);
+        Point p4 = new Point(trash.x, trash.y + 1);
+        if (this.getPosition().equals(p1) ||
+                this.getPosition().equals(p2) ||
+                this.getPosition().equals(p3) ||
+                this.getPosition().equals(p4))
+        {
+            //score++;
             return true;
         }
         return false;
@@ -67,11 +83,8 @@ public class Walle extends ActionEntity{
 
         for (Object e : entities){
             if (e.getClass().equals(Trash.class)){
-                if (this.getPosition().equals(((Trash) e).getPosition())) {
-                    //world.removeEntity((Trash)e);
-                    ((Trash) e).updateHealth(-1); // subtract from health
-
-                    ((Trash) e).transform(world, scheduler, imageStore);
+                if (this.isAtTrash(((Trash) e).getPosition())){
+                    ((Trash)e).updateHealth(-1);
                     score++;
                     System.out.println(score);
                 }
