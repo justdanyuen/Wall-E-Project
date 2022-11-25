@@ -323,8 +323,59 @@ barricade_robot barricade_robot_3_11 3 11 500
 barricade_robot barricade_robot_3_12 3 12 500
 barricade_robot barricade_robot_3_13 3 13 500
 
-gopher_robot gopher_robot_13_11 13 13 500
+barricade_robot barricade_robot_9_8 9 8 500
+barricade_robot barricade_robot_9_9 9 9 500
+barricade_robot barricade_robot_9_10 9 10 500
+barricade_robot barricade_robot_9_11 9 11 500
 
+barricade_robot barricade_robot_15_2 15 2 500
+barricade_robot barricade_robot_15_3 15 3 500
+barricade_robot barricade_robot_15_4 15 4 500
+barricade_robot barricade_robot_15_5 15 5 500
+
+barricade_robot barricade_robot_15_8 15 8 500
+barricade_robot barricade_robot_15_9 15 9 500
+barricade_robot barricade_robot_15_10 15 10 500
+barricade_robot barricade_robot_15_11 15 11 500
+
+gopher_robot gopher_robot_5_3 5 3 500
+gopher_robot gopher_robot_5_4 5 4 500
+gopher_robot gopher_robot_5_5 5 5 500
+
+gopher_robot gopher_robot_7_7 7 7 500
+gopher_robot gopher_robot_7_8 7 8 500
+gopher_robot gopher_robot_7_9 7 9 500
+
+gopher_robot gopher_robot_12_1 12 1 500
+gopher_robot gopher_robot_12_2 12 2 500
+
+gopher_robot gopher_robot_13_11 13 11 500
+gopher_robot gopher_robot_13_12 13 12 500
+gopher_robot gopher_robot_13_13 13 13 500
+
+gopher_robot gopher_robot_17_7 17 7 500
+gopher_robot gopher_robot_17_8 17 8 500
+gopher_robot gopher_robot_17_9 17 9 500
+
+
+vacuum_robot vacuum_robot_4_1 4 1 500
+vacuum_robot vacuum_robot_5_1 5 1 500
+vacuum_robot vacuum_robot_6_1 6 1 500
+
+vacuum_robot vacuum_robot_8_3 8 3 500
+vacuum_robot vacuum_robot_9_3 9 3 500
+
+
+vacuum_robot vacuum_robot_9_5 9 5 500
+vacuum_robot vacuum_robot_10_5 10 5 500
 vacuum_robot vacuum_robot_11_5 11 5 500
 
+vacuum_robot vacuum_robot_5_12 5 12 500
+vacuum_robot vacuum_robot_6_12 6 12 500
+vacuum_robot vacuum_robot_7_12 7 12 500
 
+vacuum_robot vacuum_robot_15_13 15 13 500
+vacuum_robot vacuum_robot_16_13 16 13 500
+vacuum_robot vacuum_robot_16_13 16 13 500
+
+eve eve_18_1 18 11 100 1250
