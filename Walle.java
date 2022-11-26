@@ -42,11 +42,11 @@ public class Walle extends ActionEntity{
         score = n;
     }
 
-    public boolean isAtTrash(Point trash){
-        Point p1 = new Point(trash.x - 1, trash.y);
-        Point p2 = new Point(trash.x + 1, trash.y);
-        Point p3 = new Point(trash.x, trash.y - 1);
-        Point p4 = new Point(trash.x, trash.y + 1);
+    public boolean isAtItem(Point item){
+        Point p1 = new Point(item.x - 1, item.y);
+        Point p2 = new Point(item.x + 1, item.y);
+        Point p3 = new Point(item.x, item.y - 1);
+        Point p4 = new Point(item.x, item.y + 1);
         if (this.getPosition().equals(p1) ||
                 this.getPosition().equals(p2) ||
                 this.getPosition().equals(p3) ||
@@ -83,7 +83,7 @@ public class Walle extends ActionEntity{
 
         for (Object e : entities){
             if (e.getClass().equals(Trash.class)){
-                if (this.isAtTrash(((Trash) e).getPosition())){
+                if (this.isAtItem(((Trash) e).getPosition())){
                     ((Trash)e).updateHealth(-1);
                     score++;
                     System.out.println(score);

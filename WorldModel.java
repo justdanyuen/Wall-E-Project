@@ -133,7 +133,7 @@ public final class WorldModel
         if (this.withinBounds(entity.getPosition())) {
             this.setOccupancyCell(entity.getPosition(), entity);
             this.entities.add(entity);
-           // System.out.println(entity.getClass() + " ADDED TO ENTITIES \n");
+            // System.out.println(entity.getClass() + " ADDED TO ENTITIES \n");
         }
     }
     public void moveEntity(Entity entity, Point pos) {
@@ -212,6 +212,8 @@ public final class WorldModel
                     return p.parseCart();
                 case Trash.TRASH_KEY:
                     return p.parseTrash();
+                case Boot.BOOT_KEY:
+                    return p.parseBoot();
                 case BarricadeBot.BARRICADE_ROBOT_KEY:
                     return p.parseBarricadeRobot();
                 case GopherBot.GOPHER_ROBOT_KEY:
@@ -236,8 +238,6 @@ public final class WorldModel
                     return p.parseHub(HUB_6_KEY);
                 case Eve.EVE_KEY:
                     return p.parseEve();
-                case Auto.AUTO_KEY:
-                    return p.parseAuto();
             }
         }
         return false;

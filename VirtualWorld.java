@@ -62,6 +62,8 @@ public final class VirtualWorld extends PApplet
 
     private boolean addedEve = false; // earth2
 
+    private boolean addedBoot = false; //earth1
+
     private Object[] entities1;
     private Object[] entities2;
 
@@ -90,14 +92,14 @@ public final class VirtualWorld extends PApplet
     public void setup() {
         this.imageStore = new ImageStore(
                 createImageColored(TILE_WIDTH, TILE_HEIGHT,
-                                   DEFAULT_IMAGE_COLOR));
+                        DEFAULT_IMAGE_COLOR));
 
         // scenes
         this.world = new WorldModel(WORLD_ROWS, WORLD_COLS,
-                                    createDefaultBackground(imageStore));
+                createDefaultBackground(imageStore));
 
         this.view = new WorldView(VIEW_ROWS, VIEW_COLS, this, world, TILE_WIDTH,
-                                  TILE_HEIGHT);
+                TILE_HEIGHT);
         this.scheduler = new EventScheduler(timeScale);
 
         loadImages(IMAGE_LIST_FILE_NAME, imageStore, this);
@@ -131,14 +133,46 @@ public final class VirtualWorld extends PApplet
 
         for(Object e : entities1){
             if (e instanceof Entity && e.getClass().equals(Trash.class)){
-                if (((Walle)walle).isAtTrash(((Trash) e).getPosition())){
+                if (((Walle)walle).isAtItem(((Trash) e).getPosition())){
                     ((Walle)walle).updateScore();
                     world.removeEntity((Entity)e);
                 }
             }
         }
 
-        if (((Walle)walle).getScore() >= 5 && scene1 == true && !addedEve){
+        for(Object e : entities1){
+            if (e instanceof Entity && e.getClass().equals(Boot.class)){
+                if (((Walle)walle).isAtItem(((Boot) e).getPosition())){
+                    ((Walle)walle).updateScore();
+                    world.removeEntity((Entity)e);
+                }
+            }
+        }
+
+        for(Object e : entities1){
+            if (e instanceof Entity && e.getClass().equals(Boot.class)){
+                if (((Walle)walle).isAtItem(((Boot) e).getPosition())){
+                    ((Walle)walle).updateScore();
+                    world.removeEntity((Entity)e);
+                }
+            }
+        }
+
+
+        if (((Walle)walle).getScore() >= 5 && scene1 == true && !addedBoot){
+            Boot boot = new Boot("boot",
+                    new Point(2, 12),
+                    imageStore.getImageList(Boot.BOOT_KEY),
+                    Boot.BOOT_ANIMATION_PERIOD,
+                    Boot.BOOT_ACTION_PERIOD,
+                    Boot.BOOT_HEALTH);
+            world.addEntity(boot);
+
+            addedBoot = true;
+            ((Walle)walle).setScore(0);
+        }
+
+        if (((Walle)walle).getScore() >=6 && scene1 == true && !addedEve){
             Entity eve = new Eve("eve",
                     new Point(19, 1),
                     imageStore.getImageList(Eve.EVE_KEY),
@@ -164,7 +198,7 @@ public final class VirtualWorld extends PApplet
             drawScene2();
         }
 
-       else if (addedEve && ((Walle)walle).reachedEve(eve.getPosition()) && scene2 == true) {
+        else if (addedEve && ((Walle)walle).reachedEve(eve.getPosition()) && scene2 == true) {
             scene2 = false;
             scene3 = true;
             walle.setPosition(new Point(1, 7));
@@ -286,7 +320,7 @@ public final class VirtualWorld extends PApplet
 
     public static Background createDefaultBackground(ImageStore imageStore) {
         return new Background(DEFAULT_IMAGE_NAME,
-                              imageStore.getImageList(DEFAULT_IMAGE_NAME));
+                imageStore.getImageList(DEFAULT_IMAGE_NAME));
     }
 
     public static PImage createImageColored(int width, int height, int color) {
