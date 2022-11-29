@@ -24,15 +24,10 @@ sign_long_b images/BuyNLargeLong1.png
 sign_long_m images/BuyNLargeLong2.png
 sign_long_e images/BuyNLargeLong3.png
 
-dude images/WALLE1.png
-dude images/WALLE2.png
-dude images/WALLE3.png
-dude images/WALLE1.png
-
-walle images/WALLE1.png
-walle images/WALLE2.png
-walle images/WALLE3.png
-walle images/WALLE1.png
+walle images/WalleWPlant1.png
+walle images/WalleWPlant2.png
+walle images/WalleWPlant3.png
+walle images/WalleWPlant1.png
 
 fairy images/Plant.png
 fairy images/Plant.png
@@ -81,6 +76,9 @@ hub6 images/Hub6.png
 
 eve images/Eve1.png
 eve images/Eve2.png
+
+eve_locked images/EveLocked1.png
+eve_locked images/EveLocked2.png
 
 boot images/Plant.png
 boot images/Plant2.png

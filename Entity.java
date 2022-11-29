@@ -16,6 +16,8 @@ public class Entity
 
     private String objectType;
 
+    private boolean followsWalle;
+
     public Entity(
             String id,
             Point position,
@@ -55,4 +57,6 @@ public class Entity
     public void setImageIndex(int n){
         this.imageIndex = n;
     }
+
+    public void followsWalleTrue(){ this.followsWalle = true;}
 }

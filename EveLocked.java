@@ -5,21 +5,21 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-public class Eve extends ActionEntity implements Moveable{
+public class EveLocked extends ActionEntity implements Moveable{
     private boolean walleReachedEve = false;
-    public static final String EVE_KEY = "eve";
-    public static final int EVE_NUM_PROPERTIES = 6;
-    public static final int EVE_ID = 1;
-    public static final int EVE_COL = 2;
-    public static final int EVE_ROW = 3;
-    public static final int EVE_ANIMATION_PERIOD = 4;
-    public static final int EVE_ACTION_PERIOD = 5;
+    public static final String EVE_LOCKED_KEY = "eve_locked";
+    public static final int EVE_LOCKED_NUM_PROPERTIES = 6;
+    public static final int EVE_LOCKED_ID = 1;
+    public static final int EVE_LOCKED_COL = 2;
+    public static final int EVE_LOCKED_ROW = 3;
+    public static final int EVE_LOCKED_ANIMATION_PERIOD = 4;
+    public static final int EVE_LOCKED_ACTION_PERIOD = 5;
 
     //public static final AStarPathingStrategy a = new AStarPathingStrategy();
 
     private PathingStrategy pathingStrategy = null;
 
-    public Eve(String id, Point position, List<PImage> images, int animationPeriod, int actionPeriod){
+    public EveLocked(String id, Point position, List<PImage> images, int animationPeriod, int actionPeriod){
         super(id, position, images, animationPeriod, actionPeriod);
     }
 

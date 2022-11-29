@@ -64,6 +64,8 @@ public final class VirtualWorld extends PApplet
 
     private boolean addedBoot = false; //earth1
 
+    private boolean walleReachedBoot = false;
+
     private Object[] entities1;
     private Object[] entities2;
 
@@ -140,39 +142,39 @@ public final class VirtualWorld extends PApplet
             }
         }
 
-        for(Object e : entities1){
-            if (e instanceof Entity && e.getClass().equals(Boot.class)){
-                if (((Walle)walle).isAtItem(((Boot) e).getPosition())){
-                    ((Walle)walle).updateScore();
-                    world.removeEntity((Entity)e);
-                }
-            }
-        }
+//        for(Object e : entities1){
+//            if (e instanceof Entity && e.getClass().equals(Boot.class)){
+//                if (((Walle)walle).isAtItem(((Boot) e).getPosition())){
+//                    ((Walle)walle).updateScore();
+//                    world.removeEntity((Entity)e);
+//                }
+//            }
+//        }
 
-        for(Object e : entities1){
-            if (e instanceof Entity && e.getClass().equals(Boot.class)){
-                if (((Walle)walle).isAtItem(((Boot) e).getPosition())){
-                    ((Walle)walle).updateScore();
-                    world.removeEntity((Entity)e);
-                }
-            }
-        }
+//
+//        if (((Walle)walle).getScore() >= 5 && scene1 == true && !addedBoot){
+//            Boot boot = new Boot("boot",
+//                    new Point(2, 12),
+//                    imageStore.getImageList(Boot.BOOT_KEY),
+//                    Boot.BOOT_ANIMATION_PERIOD,
+//                    Boot.BOOT_ACTION_PERIOD,
+//                    Boot.BOOT_HEALTH);
+//            world.addEntity(boot);
+//
+//            addedBoot = true;
+////            ((Walle)walle).setScore(0);
+//        }
+//
+//        for(Object e : entities1){
+//            if (e instanceof Entity && e.getClass().equals(Boot.class)){
+//                if (((Walle)walle).isAtItem(((Boot) e).getPosition())){
+//                    ((Walle)walle).updateScore();
+//                    world.removeEntity((Entity)e);
+//                }
+//            }
+//        }
 
-
-        if (((Walle)walle).getScore() >= 5 && scene1 == true && !addedBoot){
-            Boot boot = new Boot("boot",
-                    new Point(2, 12),
-                    imageStore.getImageList(Boot.BOOT_KEY),
-                    Boot.BOOT_ANIMATION_PERIOD,
-                    Boot.BOOT_ACTION_PERIOD,
-                    Boot.BOOT_HEALTH);
-            world.addEntity(boot);
-
-            addedBoot = true;
-            ((Walle)walle).setScore(0);
-        }
-
-        if (((Walle)walle).getScore() >=6 && scene1 == true && !addedEve){
+        if (((Walle)walle).getScore() >=5 && scene1 == true && !addedEve){
             Entity eve = new Eve("eve",
                     new Point(19, 1),
                     imageStore.getImageList(Eve.EVE_KEY),
@@ -194,7 +196,11 @@ public final class VirtualWorld extends PApplet
             walle.setPosition(new Point(1, 7));
             // set eve to new pos
             eve.setPosition(new Point(18, 11));
-
+//            Entity eveLocked = new EveLocked("eve_locked",
+//                    new Point(18, 11),
+//                    imageStore.getImageList(EveLocked.EVE_LOCKED_KEY),
+//                    EveLocked.EVE_LOCKED_ANIMATION_PERIOD,
+//                    EveLocked.EVE_LOCKED_ACTION_PERIOD);
             drawScene2();
         }
 
@@ -258,24 +264,24 @@ public final class VirtualWorld extends PApplet
 
     // Just for debugging and for P5
     // Be sure to refactor this method as appropriate
-    public void mousePressed() {
-        Point pressed = mouseToPoint(mouseX, mouseY);
-        System.out.println("CLICK! " + pressed.x + ", " + pressed.y);
-
-        Optional<Entity> entityOptional = world.getOccupant(pressed);
-        if (entityOptional.isPresent())
-        {
-            Entity entity = entityOptional.get();
-            // typecast to plant?
-            if (entity instanceof Plant) {
-                System.out.println(entity.getId() + ": " + entity.getClass().getTypeName() + " : " + ((Plant) entity).getHealth());
-            }
-            else {
-                System.out.println(entity.getId() + ": " + entity.getClass().getTypeName() + " : " + entity);
-            }
-        }
-
-    }
+//    public void mousePressed() {
+//        Point pressed = mouseToPoint(mouseX, mouseY);
+//        System.out.println("CLICK! " + pressed.x + ", " + pressed.y);
+//
+//        Optional<Entity> entityOptional = world.getOccupant(pressed);
+//        if (entityOptional.isPresent())
+//        {
+//            Entity entity = entityOptional.get();
+//            // typecast to plant?
+//            if (entity instanceof Plant) {
+//                System.out.println(entity.getId() + ": " + entity.getClass().getTypeName() + " : " + ((Plant) entity).getHealth());
+//            }
+//            else {
+//                System.out.println(entity.getId() + ": " + entity.getClass().getTypeName() + " : " + entity);
+//            }
+//        }
+//
+//    }
 
     private Point mouseToPoint(int x, int y)
     {
@@ -331,6 +337,12 @@ public final class VirtualWorld extends PApplet
         }
         img.updatePixels();
         return img;
+    }
+
+    public static void swapEntity(Entity first, Entity second){
+        Point temp = first.getPosition();
+        first.setPosition(second.getPosition());
+        second.setPosition(temp);
     }
 
     static void loadImages(

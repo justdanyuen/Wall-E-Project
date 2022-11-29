@@ -7,9 +7,9 @@ import java.util.stream.Stream;
 
 public class Stationary implements PathingStrategy{
     public List<Point> computePath(Point start, Point end,
-                            Predicate<Point> canPassThrough,
-                            BiPredicate<Point, Point> withinReach,
-                            Function<Point, Stream<Point>> potentialNeighbors){
+                                   Predicate<Point> canPassThrough,
+                                   BiPredicate<Point, Point> withinReach,
+                                   Function<Point, Stream<Point>> potentialNeighbors){
         List<Point> path = new ArrayList<>();
         return path;
     }

@@ -325,6 +325,7 @@ shopping_cart cart_1_5 1 5
 shopping_cart cart_12_1 12 1
 shopping_cart cart_7_11 7 11
 shopping_cart cart_17_11 17 11
+shopping_cart cart_5_4 5 4
 trash trash_3_11 3 11 50 1006 2
 trash trash_8_5 8 5 50 1006 2
 trash trash_1_7 1 7 50 1006 2
@@ -336,5 +337,4 @@ hub3 hub3_3_1 3 1
 hub4 hub4_1_2 1 2
 hub5 hub5_2_2 2 2
 hub6 hub6_3_2 3 2
-eve eve_19_2 19 2 100 1250
 walle walle_4_3 4 3 100 1250

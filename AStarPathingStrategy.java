@@ -146,9 +146,9 @@ class AStarPathingStrategy
 {
 
     public List<Point> computePath(Point start, Point end,
-                                                Predicate<Point> canPassThrough,
-                                                BiPredicate<Point, Point> withinReach,
-                                                Function<Point, Stream<Point>> potentialNeighbors) {
+                                   Predicate<Point> canPassThrough,
+                                   BiPredicate<Point, Point> withinReach,
+                                   Function<Point, Stream<Point>> potentialNeighbors) {
         // Open and Closed list data structures
 
         // list with points for path
@@ -256,9 +256,9 @@ class AStarPathingStrategy
     private double computeG(Point cur, Point adjacent){
         // for diagonals
         if ((cur.x - 1 == adjacent.x)&&(cur.y - 1 == adjacent.y)||
-            (cur.x + 1 == adjacent.x)&&(cur.y + 1 == adjacent.y)||
-            (cur.x - 1 == adjacent.x)&&(cur.y + 1 == adjacent.y)||
-            (cur.x + 1 == adjacent.x)&&(cur.y - 1 == adjacent.y)) {
+                (cur.x + 1 == adjacent.x)&&(cur.y + 1 == adjacent.y)||
+                (cur.x - 1 == adjacent.x)&&(cur.y + 1 == adjacent.y)||
+                (cur.x + 1 == adjacent.x)&&(cur.y - 1 == adjacent.y)) {
             return 1.4;
         }
         // for cardinal
