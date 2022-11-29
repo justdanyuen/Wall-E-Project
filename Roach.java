@@ -48,7 +48,7 @@ public class Roach extends ActionEntity implements Moveable{
             Entity target,
             EventScheduler scheduler)
     {
-
+//  set a boolean to only call every 50 miliseconds
         Point nextPos = this.nextPosition(world, target.getPosition());
 
         world.moveEntity(this, nextPos);

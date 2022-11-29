@@ -26,10 +26,7 @@ public final class VirtualWorld extends PApplet
     public static final String DEFAULT_IMAGE_NAME = "background_default";
     public static final int DEFAULT_IMAGE_COLOR = 0x808080;
 
-    //public static String LOAD_FILE_NAME = "earth1.sav"; // scene 1
     public static String LOAD_FILE_NAME = "space.sav"; // scene 2
-    //public static String LOAD_FILE_NAME = "earth2.sav"; // scene 3
-
 
     public static final String FAST_FLAG = "-fast";
     public static final String FASTER_FLAG = "-faster";
@@ -42,18 +39,8 @@ public final class VirtualWorld extends PApplet
 
     public ImageStore imageStore;
     public WorldModel world;
-    public WorldModel world2;
-    public WorldModel world3;
-
-
     public WorldView view;
     public EventScheduler scheduler;
-
-    // start positions for walle depending on the scene
-    // scene 3 placement tbd
-    private Point p1 = new Point(4, 3);
-    private Point p2 = new Point(1, 7);
-    private Point p3 = new Point(1, 7);
 
     // change to true depending on which scene you want to see
     private boolean scene1 = true; // earth1
@@ -69,10 +56,13 @@ public final class VirtualWorld extends PApplet
     private Object[] entities1;
     private Object[] entities2;
 
+
+//need to make these as Walle and Eve and Roach types to avoid typecasting
     private Entity walle;
     private Entity eve;
-
     private Entity roach;
+
+
     private Point startW;
     private Point startE;
     private Point startR;
@@ -141,15 +131,6 @@ public final class VirtualWorld extends PApplet
                 }
             }
         }
-
-//        for(Object e : entities1){
-//            if (e instanceof Entity && e.getClass().equals(Boot.class)){
-//                if (((Walle)walle).isAtItem(((Boot) e).getPosition())){
-//                    ((Walle)walle).updateScore();
-//                    world.removeEntity((Entity)e);
-//                }
-//            }
-//        }
 
 //
 //        if (((Walle)walle).getScore() >= 5 && scene1 == true && !addedBoot){
@@ -261,7 +242,9 @@ public final class VirtualWorld extends PApplet
         scheduleActions(world, scheduler, imageStore);
     }
 
+    public static void usesAStar(Entity entity){
 
+    }
     // Just for debugging and for P5
     // Be sure to refactor this method as appropriate
 //    public void mousePressed() {
