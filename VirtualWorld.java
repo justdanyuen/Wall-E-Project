@@ -256,7 +256,7 @@ public final class VirtualWorld extends PApplet
     }
 
     private boolean usesAStar(Entity entity){
-        System.out.println(entity.getClass());
+        //System.out.println(entity.getClass());
         if (entity.getClass().equals(Eve.class) || entity.getClass().equals(Roach.class)){
             if (scene1){
                 //System.out.println(((Roach)entity).getPathingStrategy());
