@@ -17,7 +17,7 @@ public class EveLocked extends ActionEntity implements Moveable{
 
     //public static final AStarPathingStrategy a = new AStarPathingStrategy();
 
-    private PathingStrategy pathingStrategy = null;
+    private PathingStrategy pathingStrategy = new Stationary();
 
     public EveLocked(String id, Point position, List<PImage> images, int animationPeriod, int actionPeriod){
         super(id, position, images, animationPeriod, actionPeriod);

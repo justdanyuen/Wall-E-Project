@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.security.cert.PolicyNode;
 import java.util.Scanner;
 import java.util.Optional;
 import java.util.Set;
@@ -58,9 +59,15 @@ public final class VirtualWorld extends PApplet
 
 
 //need to make these as Walle and Eve and Roach types to avoid typecasting
-    private Entity walle;
-    private Entity eve;
-    private Entity roach;
+    private Walle walle;
+    private WalleWithPlant walleWPlant;
+
+    private Entity curWalle;
+    private Eve eve;
+
+    private EveLocked eveLocked;
+    private Roach roach;
+    private Boot boot;
 
 
     private Point startW;
@@ -98,20 +105,18 @@ public final class VirtualWorld extends PApplet
 
 
         curScene = s.createScene("1");
-        loadWorld(world, curScene.returnSceneFile(), imageStore); // scene 1
+        curScene.drawScene(world, null, this, imageStore);
+
         // store all entities currently in the world
         entities1 = world.getEntities().stream().toArray();
 
         startW = new Point(4, 3);
-        walle = world.getOccupancyCell(startW); // start pos
+        Entity e = world.getOccupancyCell(startW);
+        walle = ((Walle)e);// start pos
 
         startR = new Point(0, 0);
-        roach = world.getOccupancyCell(startR); // start pos
-
-//        startE = new Point(19, 0);
-//        eve = world.getOccupancyCell(startE);
-//        ((Eve)eve).setPathingStrategy(new Stationary());
-
+        Entity r = world.getOccupancyCell(startR); // start pos
+        roach = ((Roach) r);
 
         nextTime = System.currentTimeMillis() + TIMER_ACTION_PERIOD;
     }
@@ -125,126 +130,105 @@ public final class VirtualWorld extends PApplet
 
         for(Object e : entities1){
             if (e instanceof Entity && e.getClass().equals(Trash.class)){
-                if (((Walle)walle).isAtItem(((Trash) e).getPosition())){
-                    ((Walle)walle).updateScore();
+                if (walle.isAtItem(((Trash) e).getPosition())){
+                    walle.updateScore();
                     world.removeEntity((Entity)e);
                 }
             }
         }
 
 //
-//        if (((Walle)walle).getScore() >= 5 && scene1 == true && !addedBoot){
-//            Boot boot = new Boot("boot",
-//                    new Point(2, 12),
-//                    imageStore.getImageList(Boot.BOOT_KEY),
-//                    Boot.BOOT_ANIMATION_PERIOD,
-//                    Boot.BOOT_ACTION_PERIOD,
-//                    Boot.BOOT_HEALTH);
-//            world.addEntity(boot);
-//
-//            addedBoot = true;
-////            ((Walle)walle).setScore(0);
-//        }
-//
-//        for(Object e : entities1){
-//            if (e instanceof Entity && e.getClass().equals(Boot.class)){
-//                if (((Walle)walle).isAtItem(((Boot) e).getPosition())){
-//                    ((Walle)walle).updateScore();
-//                    world.removeEntity((Entity)e);
-//                }
-//            }
-//        }
+        if (walle.getScore() >= 5 && scene1 == true && !addedBoot){
+            Entity b = new Boot("boot",
+                    new Point(9, 8),
+                    imageStore.getImageList(Boot.BOOT_KEY),
+                    Boot.BOOT_ANIMATION_PERIOD,
+                    Boot.BOOT_ACTION_PERIOD,
+                    Boot.BOOT_HEALTH);
+            boot = ((Boot) b);
+            world.addEntity(b);
+            addedBoot = true;
+        }
 
-        if (((Walle)walle).getScore() >=5 && scene1 == true && !addedEve){
-            Entity eve = new Eve("eve",
+
+        if (addedBoot && walle.isAtItem(boot.getPosition()) && scene1 == true && !addedEve){
+            //((Boot)boot).setPathingStrategy(new AStarPathingStrategy());
+            walleReachedBoot = true;
+
+            Point posWalle = walle.getPosition();
+
+            world.removeEntity(walle);
+            world.removeEntity(boot);
+
+            walleWPlant = new WalleWithPlant("walle_plant",
+                    posWalle,
+                    imageStore.getImageList(WalleWithPlant.WALLEWITHPLANT_KEY),
+                    WalleWithPlant.WALLEWITHPLANT_ANIMATION_PERIOD,
+                    WalleWithPlant.WALLEWITHPLANT_ACTION_PERIOD);
+
+            world.addEntity(walleWPlant);
+
+            Entity eve1 = new Eve("eve",
                     new Point(19, 1),
                     imageStore.getImageList(Eve.EVE_KEY),
                     Eve.EVE_ANIMATION_PERIOD,
                     Eve.EVE_ACTION_PERIOD);
-            ((Eve)eve).setPathingStrategy(new Stationary());
-            world.addEntity(eve);
+
+            ((Eve)eve1).setPathingStrategy(new Stationary());
+            world.addEntity(eve1);
 
             addedEve = true;
-            ((Walle)walle).setScore(0);
+
+            Entity e = world.getOccupancyCell(new Point(19, 1));
+            eve = ((Eve)e);
         }
 
-        startE = new Point(19, 1);
-        eve = world.getOccupancyCell(startE);
 
-        if (addedEve && ((Walle)walle).reachedEve(eve.getPosition()) && scene1 == true) {
+        if (eve != null && walleWPlant.reachedEve(eve.getPosition()) && scene1) {
             scene1 = false;
             scene2 = true;
-            walle.setPosition(new Point(1, 7));
-            // set eve to new pos
-            eve.setPosition(new Point(18, 11));
-//            Entity eveLocked = new EveLocked("eve_locked",
-//                    new Point(18, 11),
-//                    imageStore.getImageList(EveLocked.EVE_LOCKED_KEY),
-//                    EveLocked.EVE_LOCKED_ANIMATION_PERIOD,
-//                    EveLocked.EVE_LOCKED_ACTION_PERIOD);
-            drawScene2();
+
+            world.removeEntity(walleWPlant);
+
+            roach.setPathingStrategy(new Stationary());
+
+            curScene = s.createScene("2");
+
+            // factory
+            world.removeEntity(eve);
+
+            curScene.drawScene(world, entities1, this, imageStore);
+
+            Entity e = world.getOccupancyCell(new Point(18, 11));
+            eveLocked = ((EveLocked) e);
+
+            Entity w = world.getOccupancyCell(new Point(1, 7));
+            walle = ((Walle) w);
+
+            entities2 = world.getEntities().stream().toArray();
         }
 
-        else if (addedEve && ((Walle)walle).reachedEve(eve.getPosition()) && scene2 == true) {
+        else if (eveLocked != null && walle.reachedEve(eveLocked.getPosition()) && scene2) {
             scene2 = false;
             scene3 = true;
-            walle.setPosition(new Point(1, 7));
-            // set eve to new pos
-            eve.setPosition(new Point(2, 7));
-            ((Eve)eve).setPathingStrategy(new AStarPathingStrategy());
-            drawScene3();
+
+            world.removeEntity(eveLocked);
+
+            // factory
+            curScene = s.createScene("3");
+            curScene.drawScene(world, entities2, this, imageStore);
+
+            Entity wP = world.getOccupancyCell(new Point(1, 7));
+            walleWPlant = ((WalleWithPlant) wP);
         }
 
         scheduleActions(world, scheduler, imageStore);
         view.drawViewport();
 
-        //textSize(20);
-        //text("SCORE: " + ((Walle)walle).getScore(), 10, 30); // add score system
     }
 
-    public void drawScene2(){
-        //Object[] entities2 = world.getEntities().stream().toArray();
-        //this.world = new WorldModel(WORLD_ROWS, WORLD_COLS, createDefaultBackground(imageStore));
-
-        //System.out.println(world.getEntities().size());
-        curScene = s.createScene("2");
-        ((Roach)roach).setPathingStrategy(new Stationary());
-
-        for (Object e : entities1){
-            //System.out.println(e.getClass());
-            if (e instanceof Entity
-                    && !e.getClass().equals(Walle.class)
-                    && !e.getClass().equals(Eve.class)) {
-                world.removeEntity((Entity) e);
-            }
-        }
-
-        loadWorld(world, curScene.returnSceneFile(), imageStore); // scene 1
-
-        entities2 = world.getEntities().stream().toArray();
-        scheduleActions(world, scheduler, imageStore);
-    }
-
-    public void drawScene3(){
-        curScene = s.createScene("3");
-
-        for (Object e : entities2){
-            System.out.println(e.getClass());
-            if (e instanceof Entity
-                    && !e.getClass().equals(Walle.class)
-                    && !e.getClass().equals(Eve.class)){
-                world.removeEntity((Entity) e);
-            }
-        }
 
 
-        loadWorld(world, curScene.returnSceneFile(), imageStore); // scene 1
-        scheduleActions(world, scheduler, imageStore);
-    }
-
-    public static void usesAStar(Entity entity){
-
-    }
     // Just for debugging and for P5
     // Be sure to refactor this method as appropriate
 //    public void mousePressed() {
@@ -271,40 +255,70 @@ public final class VirtualWorld extends PApplet
         return view.getViewport().viewportToWorld(mouseX/TILE_WIDTH, mouseY/TILE_HEIGHT);
     }
 
+    private boolean usesAStar(Entity entity){
+        System.out.println(entity.getClass());
+        if (entity.getClass().equals(Eve.class) || entity.getClass().equals(Roach.class)){
+            if (scene1){
+                //System.out.println(((Roach)entity).getPathingStrategy());
+                return ((Roach) entity).getPathingStrategy() instanceof AStarPathingStrategy;
+            } else if (scene3) {
+                return ((Eve) entity).getPathingStrategy() instanceof AStarPathingStrategy;
+            }
+
+        }
+        return false;
+    }
+
 
     // change to only effect wall-e
     public void keyPressed() {
 
-        if (key == CODED) {
             int dx = 0;
             int dy = 0;
 
 
-            switch (keyCode) {
-                case UP:
+            switch (key) {
+                case 'w':
                     dy = -1;
                     break;
-                case DOWN:
+                case 's':
                     dy = 1;
                     break;
-                case LEFT:
+                case 'a':
                     dx = -1;
                     break;
-                case RIGHT:
+                case 'd':
                     dx = 1;
                     break;
             }
 
+            Point newP;
 
-            Point newP = new Point(walle.getPosition().x + dx, walle.getPosition().y + dy);
+            if (walleReachedBoot && scene1 || scene3){
+                curWalle = walleWPlant;
+                newP = new Point(walleWPlant.getPosition().x + dx, walleWPlant.getPosition().y + dy);
+            }
+            else {
+                curWalle = walle;
+                newP = new Point(walle.getPosition().x + dx, walle.getPosition().y + dy);
+            }
 
-            if (!world.isOccupied(newP)
-                    && ((newP.x > 0 && newP.x < VIEW_COLS - 1) && (newP.y > 0 && newP.y < VIEW_ROWS - 1))){
-
-                world.moveEntity(walle,newP);
+            if (!world.isOccupied(newP) && ((newP.x > 0 && newP.x < VIEW_COLS - 1) && (newP.y > 0 && newP.y < VIEW_ROWS - 1))){
+                world.moveEntity(curWalle,newP);
                 //System.out.println(walle.getPosition());
             }
-        }
+            else if (world.isOccupied(newP)) {
+                Point curPos = curWalle.getPosition();
+                Entity e = world.getOccupancyCell(newP);
+
+                if (usesAStar(e)){
+                    // swap
+                    curWalle.setPosition(e.getPosition());
+                    e.setPosition(curPos);
+                   // System.out.println("SWAP");
+                }
+            }
+
     }
 
     public static Background createDefaultBackground(ImageStore imageStore) {

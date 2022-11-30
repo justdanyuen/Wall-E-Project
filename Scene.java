@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public interface Scene {
     String returnSceneFile();
-
+    void drawScene(WorldModel world, Object[] entities, VirtualWorld v, ImageStore imageStore);
 
 //    static void loadWorld(
 //            WorldModel world, String filename, ImageStore imageStore)

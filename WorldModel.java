@@ -238,6 +238,10 @@ public final class WorldModel
                     return p.parseHub(HUB_6_KEY);
                 case Eve.EVE_KEY:
                     return p.parseEve();
+                case EveLocked.EVE_LOCKED_KEY:
+                    return p.parseEveLocked();
+                case WalleWithPlant.WALLEWITHPLANT_KEY:
+                    return p.parseWalleWPlant();
             }
         }
         return false;

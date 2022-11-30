@@ -23,6 +23,9 @@ public class Eve extends ActionEntity implements Moveable{
         super(id, position, images, animationPeriod, actionPeriod);
     }
 
+    public PathingStrategy getPathingStrategy(){
+        return pathingStrategy;
+    }
     public void setPathingStrategy(PathingStrategy p){
         this.pathingStrategy = p;
     }
@@ -61,7 +64,7 @@ public class Eve extends ActionEntity implements Moveable{
             EventScheduler scheduler)
     {
         Optional<Entity> eveTarget =
-                world.findNearest(this.getPosition(), new ArrayList<>(Arrays.asList(Walle.class)));
+                world.findNearest(this.getPosition(), new ArrayList<>(Arrays.asList(WalleWithPlant.class)));
 
         if (eveTarget.isPresent()) {
             this.moveTo(world, eveTarget.get(), scheduler);

@@ -25,6 +25,11 @@ public class Roach extends ActionEntity implements Moveable{
 
     }
 
+    public PathingStrategy getPathingStrategy(){
+        return pathingStrategy;
+    }
+
+
     public void setPathingStrategy(PathingStrategy p){
         this.pathingStrategy = p;
     }

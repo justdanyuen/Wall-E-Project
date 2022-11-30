@@ -16,7 +16,7 @@ public class Boot extends ActionEntity implements Moveable{
     public static final int BOOT_ACTION_PERIOD = 5;
     public static final int BOOT_HEALTH = 1;
     private int health;
-    private PathingStrategy pathingStrategy = null;
+    private PathingStrategy pathingStrategy = new Stationary();
 
 
     public Boot(String id, Point position, List<PImage> images, int animationPeriod, int actionPeriod, int health){

@@ -296,4 +296,36 @@ public class Parse {
         }
         return this.properties.length == Walle.WALLE_NUM_PROPERTIES;
     }
+
+    public boolean parseEveLocked()
+    {
+        if (this.properties.length == EveLocked.EVE_LOCKED_NUM_PROPERTIES) {
+            Point pt = new Point(Integer.parseInt(this.properties[EveLocked.EVE_LOCKED_COL]),
+                    Integer.parseInt(this.properties[EveLocked.EVE_LOCKED_ROW]));
+            EveLocked eve = new EveLocked(this.properties[EveLocked.EVE_LOCKED_ID],
+                    pt,
+                    imageStore.getImageList(EveLocked.EVE_LOCKED_KEY),
+                    Integer.parseInt(this.properties[EveLocked.EVE_LOCKED_ANIMATION_PERIOD]),
+                    Integer.parseInt(this.properties[EveLocked.EVE_LOCKED_ACTION_PERIOD]));
+
+            this.world.tryAddEntity(eve);
+        }
+        return this.properties.length == EveLocked.EVE_LOCKED_NUM_PROPERTIES;
+    }
+
+    public boolean parseWalleWPlant()
+    {
+        if (this.properties.length == WalleWithPlant.WALLEWITHPLANT_NUM_PROPERTIES) {
+            Point pt = new Point(Integer.parseInt(this.properties[WalleWithPlant.WALLEWITHPLANT_COL]),
+                    Integer.parseInt(this.properties[WalleWithPlant.WALLEWITHPLANT_ROW]));
+            WalleWithPlant walleWithPlant = new WalleWithPlant(this.properties[WalleWithPlant.WALLEWITHPLANT_ID],
+                    pt,
+                    imageStore.getImageList(WalleWithPlant.WALLEWITHPLANT_KEY),
+                    Integer.parseInt(this.properties[WalleWithPlant.WALLEWITHPLANT_ANIMATION_PERIOD]),
+                    Integer.parseInt(this.properties[WalleWithPlant.WALLEWITHPLANT_ACTION_PERIOD]));
+
+            this.world.tryAddEntity(walleWithPlant);
+        }
+        return this.properties.length == WalleWithPlant.WALLEWITHPLANT_NUM_PROPERTIES;
+    }
 }

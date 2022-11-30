@@ -13,18 +13,31 @@ public class SceneFactory {
         }
         switch(scene){
             case("1"):
-                return new Earth1();
+                return new EarthOneFactory();
 
             case("2"):
-                return new Space();
+                return new SpaceFactory();
 
             case("3"):
-                return new Earth2();
+                return new EarthTwoFactory();
 
             default:
                 throw new IllegalArgumentException("invalid scene entry: "+ scene);
         }
     }
+
+//    abstract void drawScene(Scene s, WorldModel world, Object[] entities, VirtualWorld v, ImageStore imageStore){
+//        for (Object e : entities){
+//            if (e instanceof Entity
+//                    && !e.getClass().equals(Walle.class)
+//                    && !e.getClass().equals(Eve.class)){
+//                world.removeEntity((Entity) e);
+//            }
+//        }
+//
+//        v.loadWorld(world, s.returnSceneFile(), imageStore);
+//
+//    }
 
     public String getSceneNum() {
         return sceneNum;
