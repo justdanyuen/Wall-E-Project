@@ -22,64 +22,6 @@ public class Parse {
         this.world = world;
     }
 
-//    public boolean parseHouse()
-//    {
-//        if (this.properties.length == House.HOUSE_NUM_PROPERTIES) {
-//            Point pt = new Point(Integer.parseInt(this.properties[House.HOUSE_COL]),
-//                    Integer.parseInt(this.properties[House.HOUSE_ROW]));
-//            House house = new House(this.properties[House.HOUSE_ID], pt,
-//                    this.imageStore.getImageList(House.HOUSE_KEY));
-//            this.world.tryAddEntity(house);
-//        }
-//
-//        return this.properties.length == House.HOUSE_NUM_PROPERTIES;
-//    }
-
-    public boolean parseObstacle()
-    {
-        if (this.properties.length == OBSTACLE_NUM_PROPERTIES) {
-            Point pt = new Point(Integer.parseInt(this.properties[OBSTACLE_COL]),
-                    Integer.parseInt(this.properties[OBSTACLE_ROW]));
-            Obstacle obstacle = new Obstacle(this.properties[OBSTACLE_ID], pt,
-                    imageStore.getImageList(OBSTACLE_KEY),
-                    Integer.parseInt(this.properties[OBSTACLE_ANIMATION_PERIOD]));
-            this.world.tryAddEntity(obstacle);
-        }
-        return this.properties.length == OBSTACLE_NUM_PROPERTIES;
-    }
-
-//    public boolean parseTree()
-//    {
-//        if (this.properties.length == Tree.TREE_NUM_PROPERTIES) {
-//            Point pt = new Point(Integer.parseInt(this.properties[Tree.TREE_COL]),
-//                    Integer.parseInt(this.properties[Tree.TREE_ROW]));
-//            Tree tree = new Tree(this.properties[Tree.TREE_ID],
-//                    pt,
-//                    imageStore.getImageList(Tree.TREE_KEY),
-//                    Integer.parseInt(properties[Tree.TREE_ANIMATION_PERIOD]),
-//                    Integer.parseInt(properties[Tree.TREE_ACTION_PERIOD]),
-//                    Integer.parseInt(properties[Tree.TREE_HEALTH])
-//            );
-//            this.world.tryAddEntity(tree);
-//        }
-//
-//        return this.properties.length == Tree.TREE_NUM_PROPERTIES;
-//    }
-
-
-//    public boolean parseSapling()
-//    {
-//        if (this.properties.length == Sapling.SAPLING_NUM_PROPERTIES) {
-//            Point pt = new Point(Integer.parseInt(this.properties[Sapling.SAPLING_COL]),
-//                    Integer.parseInt(this.properties[Sapling.SAPLING_ROW]));
-//            String id = this.properties[Sapling.SAPLING_ID];
-//            int health = Integer.parseInt(this.properties[Sapling.SAPLING_HEALTH]);
-//            Sapling sapling = new Sapling(id, pt, this.imageStore.getImageList(Sapling.SAPLING_KEY), Sapling.SAPLING_ACTION_ANIMATION_PERIOD, Sapling.SAPLING_ACTION_ANIMATION_PERIOD, health, Sapling.SAPLING_HEALTH_LIMIT);
-//            this.world.tryAddEntity(sapling);
-//        }
-//
-//        return this.properties.length == Sapling.SAPLING_NUM_PROPERTIES;
-//    }
 
     public boolean parseBackground()
     {
@@ -175,22 +117,6 @@ public class Parse {
         return this.properties.length == Trash.TRASH_NUM_PROPERTIES;
     }
 
-    public boolean parseSoil() {
-        if (this.properties.length == Soil.SOIL_NUM_PROPERTIES) {
-            Point pt = new Point(Integer.parseInt(this.properties[Soil.SOIL_COL]),
-                    Integer.parseInt(this.properties[Soil.SOIL_ROW]));
-            Soil soil = new Soil(this.properties[Soil.SOIL_ID],
-                    pt,
-                    imageStore.getImageList(Soil.SOIL_KEY),
-                    Integer.parseInt(properties[Soil.SOIL_ANIMATION_PERIOD]),
-                    Integer.parseInt(properties[Soil.SOIL_ACTION_PERIOD]));
-
-            this.world.tryAddEntity(soil);
-        }
-        return this.properties.length == Soil.SOIL_NUM_PROPERTIES;
-    }
-
-
 
     public boolean parseBoot()
     {
@@ -214,9 +140,10 @@ public class Parse {
         if (this.properties.length == Robot.ROBOT_NUM_PROPERTIES) {
             Point pt = new Point(Integer.parseInt(this.properties[Robot.ROBOT_COL]),
                     Integer.parseInt(this.properties[Robot.ROBOT_ROW]));
-            Robot robot = new Robot(this.properties[Robot.ROBOT_ID], pt,
+            BarricadeBot robot = new BarricadeBot(this.properties[Robot.ROBOT_ID], pt,
                     imageStore.getImageList(BarricadeBot.BARRICADE_ROBOT_KEY),
-                    Integer.parseInt(this.properties[Robot.ROBOT_ANIMATION_PERIOD]));
+                    Integer.parseInt(this.properties[Robot.ROBOT_ANIMATION_PERIOD]),
+                    Integer.parseInt(this.properties[Robot.ROBOT_ACTION_PERIOD]));
             this.world.tryAddEntity(robot);
         }
         return this.properties.length == Robot.ROBOT_NUM_PROPERTIES;
@@ -227,9 +154,11 @@ public class Parse {
         if (this.properties.length == Robot.ROBOT_NUM_PROPERTIES) {
             Point pt = new Point(Integer.parseInt(this.properties[Robot.ROBOT_COL]),
                     Integer.parseInt(this.properties[Robot.ROBOT_ROW]));
-            Robot robot = new Robot(this.properties[Robot.ROBOT_ID], pt,
+            GopherBot robot = new GopherBot(this.properties[Robot.ROBOT_ID],
+                    pt,
                     imageStore.getImageList(GopherBot.GOPHER_ROBOT_KEY),
-                    Integer.parseInt(this.properties[Robot.ROBOT_ANIMATION_PERIOD]));
+                    Integer.parseInt(this.properties[Robot.ROBOT_ANIMATION_PERIOD]),
+                    Integer.parseInt(this.properties[Robot.ROBOT_ACTION_PERIOD]));
             this.world.tryAddEntity(robot);
         }
         return this.properties.length == Robot.ROBOT_NUM_PROPERTIES;
@@ -240,9 +169,10 @@ public class Parse {
         if (this.properties.length == Robot.ROBOT_NUM_PROPERTIES) {
             Point pt = new Point(Integer.parseInt(this.properties[Robot.ROBOT_COL]),
                     Integer.parseInt(this.properties[Robot.ROBOT_ROW]));
-            Robot robot = new Robot(this.properties[Robot.ROBOT_ID], pt,
+            VacuumBot robot = new VacuumBot(this.properties[Robot.ROBOT_ID], pt,
                     imageStore.getImageList(VacuumBot.VACUUM_ROBOT_KEY),
-                    Integer.parseInt(this.properties[Robot.ROBOT_ANIMATION_PERIOD]));
+                    Integer.parseInt(this.properties[Robot.ROBOT_ANIMATION_PERIOD]),
+                    Integer.parseInt(this.properties[Robot.ROBOT_ACTION_PERIOD]));
             this.world.tryAddEntity(robot);
         }
         return this.properties.length == Robot.ROBOT_NUM_PROPERTIES;
@@ -312,7 +242,6 @@ public class Parse {
         }
         return this.properties.length == Walle.WALLE_NUM_PROPERTIES;
     }
-
 
     public boolean parseEveLocked()
     {

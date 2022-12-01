@@ -12,25 +12,11 @@ public class HorizontalPathingStrategy implements PathingStrategy{
                                    Predicate<Point> canPassThrough,
                                    BiPredicate<Point, Point> withinReach,
                                    Function<Point, Stream<Point>> potentialNeighbors){
-        List<Point> path = new LinkedList<>();
-
-        Node curNode = new Node(start);
-
-        //if the offset is zero,
-        //if the previous ofset was 1, move to the left (-1)
-        //else try to move to the right
 
 
-        //if the offset is negative 1, try moving to the right (back to 0)
-
-
-        //if the offset is one, try moving to the left ( back to 0)
-
-
-        List<Point> neighbors = potentialNeighbors.apply(curNode.getPoint())
-                .filter(canPassThrough)
+        List<Point> neighbors = potentialNeighbors.apply(start) // use start
                 .collect(Collectors.toList());
 
-        return path;
+        return neighbors; // return neighbors
     }
 }

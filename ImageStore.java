@@ -8,6 +8,8 @@ public final class ImageStore
     private Map<String, List<PImage>> images;
     private List<PImage> defaultImages;
 
+    public static final Random rand = new Random();
+
     public static final int COLOR_MASK = 0xffffff;
     public static final int KEYED_IMAGE_MIN = 5;
     private static final int KEYED_RED_IDX = 2;

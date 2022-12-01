@@ -5,8 +5,7 @@ public class SpaceFactory implements Scene{
 
     public void drawScene(WorldModel world, Object[] entities, VirtualWorld v, ImageStore imageStore){
         for (Object e : entities){
-            if (e instanceof Entity
-                    && !e.getClass().equals(Walle.class)){
+            if (e instanceof Entity){
                 world.removeEntity((Entity) e);
             }
         }

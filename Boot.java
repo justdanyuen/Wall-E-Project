@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class Boot extends ActionEntity implements Moveable{
-       public static final String BOOT_KEY = "boot";
+    public static final String BOOT_KEY = "boot";
     public static final int BOOT_NUM_PROPERTIES = 7;
     public static final int BOOT_ID = 1;
     public static final int BOOT_COL = 2;

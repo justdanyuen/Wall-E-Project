@@ -21,8 +21,8 @@ public class SceneFactory {
             case("3"):
                 return new EarthTwoFactory();
 
-            case ("4"):
-                return new EarthThreeFactory();
+            case("4"):
+                return new EndSceneFactory();
 
             default:
                 throw new IllegalArgumentException("invalid scene entry: "+ scene);

@@ -20,7 +20,7 @@ interface PathingStrategy
                            BiPredicate<Point, Point> withinReach,
                            Function<Point, Stream<Point>> potentialNeighbors);
 
-   static final Function<Point, Stream<Point>> CARDINAL_NEIGHBORS =
+   Function<Point, Stream<Point>> CARDINAL_NEIGHBORS =
            point ->
                    Stream.<Point>builder()
                            .add(new Point(point.x, point.y - 1))
@@ -28,7 +28,7 @@ interface PathingStrategy
                            .add(new Point(point.x - 1, point.y))
                            .add(new Point(point.x + 1, point.y))
                            .build();
-   public static final Function<Point, Stream<Point>> DIAGONAL_NEIGHBORS =
+   Function<Point, Stream<Point>> DIAGONAL_NEIGHBORS =
            point ->
                    Stream.<Point>builder()
                            .add(new Point(point.x - 1, point.y - 1))
@@ -37,7 +37,32 @@ interface PathingStrategy
                            .add(new Point(point.x + 1, point.y - 1))
                            .build();
 
-   public static final Function<Point, Stream<Point>> DIAGONAL_CARDINAL_NEIGHBORS =
+   // boolean instance in horiz pathing class to determine if right or left
+   Function<Point, Stream<Point>> LEFT_NEIGHBOR =
+           point ->
+                   Stream.<Point>builder()
+                           .add(new Point(point.x - 1, point.y))
+                           .build();
+
+   Function<Point, Stream<Point>> RIGHT_NEIGHBOR =
+           point ->
+                   Stream.<Point>builder()
+                           .add(new Point(point.x + 1, point.y))
+                           .build();
+
+   Function<Point, Stream<Point>> DOWN_NEIGHBOR =
+           point ->
+                   Stream.<Point>builder()
+                           .add(new Point(point.x, point.y + 1))
+                           .build();
+
+   Function<Point, Stream<Point>> UP_NEIGHBOR =
+           point ->
+                   Stream.<Point>builder()
+                           .add(new Point(point.x, point.y - 1))
+                           .build();
+
+   Function<Point, Stream<Point>> DIAGONAL_CARDINAL_NEIGHBORS =
            point ->
                    Stream.<Point>builder()
                            .add(new Point(point.x - 1, point.y - 1))
@@ -50,23 +75,17 @@ interface PathingStrategy
                            .add(new Point(point.x + 1, point.y))
                            .build();
 
-   public static boolean withinBounds(Point p)
+   static boolean withinBounds(Point p)
    {
       return p.y >= 0 && p.y < 14 &&
               p.x >= 0 && p.x < 19;
    }
 
-   public static boolean neighbors(Point p1, Point p2)
+   static boolean neighbors(Point p1, Point p2)
    {
       return p1.x+1 == p2.x && p1.y == p2.y ||
               p1.x-1 == p2.x && p1.y == p2.y ||
               p1.x == p2.x && p1.y+1 == p2.y ||
               p1.x == p2.x && p1.y-1 == p2.y;
-
-      //added neighbor testing for diagonals
-//             p1.x-1 == p2.x && p1.y-1 == p2.y ||
-//             p1.x+1 == p2.x && p1.y+1 == p2.y ||
-//             p1.x+1 == p2.x && p1.y-1 == p2.y ||
-//             p1.x-1 == p2.x && p1.y+1 == p2.y;
    }
 }
