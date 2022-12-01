@@ -302,13 +302,9 @@ roach roach_0_0 0 0 51 51
 pipe_b pipe_11_8 11 8
 pipe_m pipe_12_8 12 8
 pipe_e pipe_13_8 13 8
-
-
 pipe_b pipe_9_5 9 5
 pipe_m pipe_10_5 10 5
 pipe_e pipe_11_5 11 5
-
-
 pipe_b pipe_10_9 10 9
 pipe_e pipe_11_9 11 9
 pipe_b pipe_3_13 3 13

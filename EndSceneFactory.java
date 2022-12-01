@@ -10,6 +10,14 @@ public class EndSceneFactory implements Scene{
             }
         }
 
+        WalleWithPlant walleWithPlant = new WalleWithPlant("walle_plant",
+                new Point(1, 1),
+                imageStore.getImageList(WalleWithPlant.WALLEWITHPLANT_KEY),
+                WalleWithPlant.WALLEWITHPLANT_ANIMATION_PERIOD,
+                WalleWithPlant.WALLEWITHPLANT_ACTION_PERIOD);
+
+        world.addEntity(walleWithPlant);
+
         v.loadWorld(world, this.returnSceneFile(), imageStore);
     }
 }
