@@ -1,0 +1,24 @@
+Include a text file named WORLD_EVENT.txt in your submission that describes:
+1. how to trigger the event
+    Each of our scenes has an objective.
+    Scene 1: Pick up all the trash which triggers a boot with a plant in it to appear.
+             After picking up the boot, Eve (another robot) appears.
+             Reaching her is the final objective.
+             This will cause a scene change.
+    Scene 2: This scene's objective is to navigate through the robot obstacles in order to save Eve
+            on the spaceship. After reaching Eve, scene 3 is displayed.
+    Scene 3: This scene's objective is to navigate through the maze to plant the boot, similar to the movie.
+              Scene 4, which is like an end credit scene is triggered after planting the boot.
+
+2. what should happen when the event is triggered
+    Either an entity appears or a scene change occurs.
+
+3. what the affected entities should do
+    They are either removed from the scene if stationary, or transform into another version of themselves: Walle to WalleWithPlant.
+
+4. what the new entity is and how it should behave
+    The new entity can be an obstacle or a goal reference for the main character. The appearance of an entity if a character can change.
+
+5. (if applicable) the names of each partner and what each partner was responsible for
+    Felicia Patel: Scene changes, implementing key functions and Astar, character transitions and draw function conditionals
+    Justin Yuen: Graphic design, sav layout, entity swap method, key pressed modification
