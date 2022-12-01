@@ -376,3 +376,5 @@ vacuum_robot vacuum_robot_7_12 7 12 500 100
 vacuum_robot vacuum_robot_15_13 15 13 500 100
 vacuum_robot vacuum_robot_16_13 16 13 500 100
 vacuum_robot vacuum_robot_16_13 16 13 500 100
+
+auto auto_0_0 0 0 100000 1250

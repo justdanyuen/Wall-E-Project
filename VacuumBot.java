@@ -18,9 +18,9 @@ public class VacuumBot extends Robot{
     public boolean moveTo(WorldModel world, Entity entity, EventScheduler scheduler){
         //int count = 0;
         //while (count < 3){
-        movingLeft = true;
-        world.moveEntity(this, this.nextPosition(world, null));
-        //count++;
+            movingLeft = true;
+            world.moveEntity(this, this.nextPosition(world, null));
+            //count++;
         //}
 
 //        count = 0;

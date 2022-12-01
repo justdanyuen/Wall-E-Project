@@ -274,4 +274,5 @@ public class Parse {
         }
         return this.properties.length == WalleWithPlant.WALLEWITHPLANT_NUM_PROPERTIES;
     }
+
 }
