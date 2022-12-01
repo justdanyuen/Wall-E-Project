@@ -1,6 +1,7 @@
-public class EarthTwoFactory implements Scene{
+public class EarthThreeFactory implements Scene{
+
     public String returnSceneFile() {
-        return "earth2.sav";
+        return "earth3.sav";
     }
 
     public void drawScene(WorldModel world, Object[] entities, VirtualWorld v, ImageStore imageStore){

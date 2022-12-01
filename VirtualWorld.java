@@ -48,6 +48,8 @@ public final class VirtualWorld extends PApplet
     private boolean scene2 = false; // space
     private boolean scene3 = false; // earth2
 
+    private boolean scene4 = false; // end scene
+
     private boolean addedEve = false; // earth2
 
     private boolean addedBoot = false; //earth1
@@ -57,8 +59,10 @@ public final class VirtualWorld extends PApplet
     private Object[] entities1;
     private Object[] entities2;
 
+    private Object[] entities3;
 
-//need to make these as Walle and Eve and Roach types to avoid typecasting
+
+    //need to make these as Walle and Eve and Roach types to avoid typecasting
     private Walle walle;
     private WalleWithPlant walleWPlant;
 
@@ -68,6 +72,8 @@ public final class VirtualWorld extends PApplet
     private EveLocked eveLocked;
     private Roach roach;
     private Boot boot;
+
+    private Soil soil;
 
 
     private Point startW;
@@ -208,7 +214,7 @@ public final class VirtualWorld extends PApplet
             entities2 = world.getEntities().stream().toArray();
         }
 
-        else if (eveLocked != null && walle.reachedEve(eveLocked.getPosition()) && scene2) {
+        if (eveLocked != null && walle.reachedEve(eveLocked.getPosition()) && scene2) {
             scene2 = false;
             scene3 = true;
 
@@ -220,7 +226,29 @@ public final class VirtualWorld extends PApplet
 
             Entity wP = world.getOccupancyCell(new Point(1, 7));
             walleWPlant = ((WalleWithPlant) wP);
+
+            Entity s = world.getOccupancyCell(new Point(19, 7));
+            soil = ((Soil) s);
+
+            entities3 = world.getEntities().stream().toArray();
+
         }
+
+        else if(soil != null && walle.reachedEve(soil.getPosition()) && scene3){
+            scene3 = false;
+            scene4 = true;
+
+            world.removeEntity(soil);
+
+            curScene = s.createScene("4");
+            curScene.drawScene(world, entities3, this, imageStore);
+
+            Entity w = world.getOccupancyCell((new Point(1, 7)));
+            walleWPlant = ((WalleWithPlant) w);
+
+        }
+
+
 
         scheduleActions(world, scheduler, imageStore);
         view.drawViewport();
@@ -273,51 +301,51 @@ public final class VirtualWorld extends PApplet
     // change to only effect wall-e
     public void keyPressed() {
 
-            int dx = 0;
-            int dy = 0;
+        int dx = 0;
+        int dy = 0;
 
 
-            switch (key) {
-                case 'w':
-                    dy = -1;
-                    break;
-                case 's':
-                    dy = 1;
-                    break;
-                case 'a':
-                    dx = -1;
-                    break;
-                case 'd':
-                    dx = 1;
-                    break;
+        switch (key) {
+            case 'w':
+                dy = -1;
+                break;
+            case 's':
+                dy = 1;
+                break;
+            case 'a':
+                dx = -1;
+                break;
+            case 'd':
+                dx = 1;
+                break;
+        }
+
+        Point newP;
+
+        if (walleReachedBoot && scene1 || scene3){
+            curWalle = walleWPlant;
+            newP = new Point(walleWPlant.getPosition().x + dx, walleWPlant.getPosition().y + dy);
+        }
+        else {
+            curWalle = walle;
+            newP = new Point(walle.getPosition().x + dx, walle.getPosition().y + dy);
+        }
+
+        if (!world.isOccupied(newP) && ((newP.x > 0 && newP.x < VIEW_COLS - 1) && (newP.y > 0 && newP.y < VIEW_ROWS - 1))){
+            world.moveEntity(curWalle,newP);
+            //System.out.println(walle.getPosition());
+        }
+        else if (world.isOccupied(newP)) {
+            Point curPos = curWalle.getPosition();
+            Entity e = world.getOccupancyCell(newP);
+
+            if (usesAStar(e)){
+                // swap
+                curWalle.setPosition(e.getPosition());
+                e.setPosition(curPos);
+                // System.out.println("SWAP");
             }
-
-            Point newP;
-
-            if (walleReachedBoot && scene1 || scene3){
-                curWalle = walleWPlant;
-                newP = new Point(walleWPlant.getPosition().x + dx, walleWPlant.getPosition().y + dy);
-            }
-            else {
-                curWalle = walle;
-                newP = new Point(walle.getPosition().x + dx, walle.getPosition().y + dy);
-            }
-
-            if (!world.isOccupied(newP) && ((newP.x > 0 && newP.x < VIEW_COLS - 1) && (newP.y > 0 && newP.y < VIEW_ROWS - 1))){
-                world.moveEntity(curWalle,newP);
-                //System.out.println(walle.getPosition());
-            }
-            else if (world.isOccupied(newP)) {
-                Point curPos = curWalle.getPosition();
-                Entity e = world.getOccupancyCell(newP);
-
-                if (usesAStar(e)){
-                    // swap
-                    curWalle.setPosition(e.getPosition());
-                    e.setPosition(curPos);
-                   // System.out.println("SWAP");
-                }
-            }
+        }
 
     }
 

@@ -175,6 +175,22 @@ public class Parse {
         return this.properties.length == Trash.TRASH_NUM_PROPERTIES;
     }
 
+    public boolean parseSoil() {
+        if (this.properties.length == Soil.SOIL_NUM_PROPERTIES) {
+            Point pt = new Point(Integer.parseInt(this.properties[Soil.SOIL_COL]),
+                    Integer.parseInt(this.properties[Soil.SOIL_ROW]));
+            Soil soil = new Soil(this.properties[Soil.SOIL_ID],
+                    pt,
+                    imageStore.getImageList(Soil.SOIL_KEY),
+                    Integer.parseInt(properties[Soil.SOIL_ANIMATION_PERIOD]),
+                    Integer.parseInt(properties[Soil.SOIL_ACTION_PERIOD]));
+
+            this.world.tryAddEntity(soil);
+        }
+        return this.properties.length == Soil.SOIL_NUM_PROPERTIES;
+    }
+
+
 
     public boolean parseBoot()
     {
@@ -296,6 +312,7 @@ public class Parse {
         }
         return this.properties.length == Walle.WALLE_NUM_PROPERTIES;
     }
+
 
     public boolean parseEveLocked()
     {

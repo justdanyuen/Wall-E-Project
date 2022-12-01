@@ -5,51 +5,22 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-public class Boot extends ActionEntity implements Moveable{
-       public static final String BOOT_KEY = "boot";
-    public static final int BOOT_NUM_PROPERTIES = 7;
-    public static final int BOOT_ID = 1;
-    public static final int BOOT_COL = 2;
-    public static final int BOOT_ROW = 3;
-    public static final int BOOT_ANIMATION_PERIOD = 4;
+public class Soil extends ActionEntity{
+    public static final String SOIL_KEY = "soil";
+    public static final int SOIL_NUM_PROPERTIES = 4;
+    public static final int SOIL_ID = 1;
+    public static final int SOIL_COL = 2;
+    public static final int SOIL_ROW = 3;
+    public static final int SOIL_ANIMATION_PERIOD = 4;
 
-    public static final int BOOT_ACTION_PERIOD = 5;
-    public static final int BOOT_HEALTH = 1;
-    private int health;
+    public static final int SOIL_ACTION_PERIOD = 5;
+
+    private boolean walleReachedEve = false;
     private PathingStrategy pathingStrategy = new Stationary();
 
-
-    public Boot(String id, Point position, List<PImage> images, int animationPeriod, int actionPeriod, int health){
+    public Soil(String id, Point position, List<PImage> images, int animationPeriod, int actionPeriod){
         super(id, position, images, animationPeriod, actionPeriod);
-        this.health = health;
     }
-
-    public int getHealth(){
-        return this.health;
-    }
-
-    public void updateHealth(int n) {
-        this.health += n;
-    }
-
-    public boolean transform(
-            WorldModel world,
-            EventScheduler scheduler,
-            ImageStore imageStore)
-    {
-        if (health <= 0) {
-            world.removeEntity(this);
-            scheduler.unscheduleAllEvents(this);
-            System.out.println("BOOT REMOVED");
-            return true;
-        }
-        return false;
-    }
-
-    public void setPathingStrategy(PathingStrategy p){
-        this.pathingStrategy = p;
-    }
-
 
     public Point nextPosition(WorldModel world, Point destPos)
     {
@@ -94,5 +65,5 @@ public class Boot extends ActionEntity implements Moveable{
                 this.createActivityAction(world, imageStore),
                 this.getActionPeriod());
     }
-
+    // SCENE 3 - Eve uses AStar to follow Walle
 }

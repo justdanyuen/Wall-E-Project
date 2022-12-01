@@ -5,6 +5,8 @@ dark_dirt images/Dirt.png
 ship_floor images/ShipFloor.png
 ship_wall images/ShipWall.png
 
+darker_dirt images/SoilTarget1.png
+
 background_default images/none.bmp
 
 pipe_b images/Pipe1.png
@@ -12,6 +14,8 @@ pipe_m images/Pipe2.png
 pipe_e images/Pipe3.png
 
 tires images/Tires.png
+
+soil images/Dirt.png
 
 shopping_cart images/ShoppingCart.png
 
@@ -28,6 +32,11 @@ walle images/WALLE1.png
 walle images/WALLE2.png
 walle images/WALLE3.png
 walle images/WALLE1.png
+
+walle_plant images/WalleWPlant1.png
+walle_plant images/WalleWPlant2.png
+walle_plant images/WalleWPlant3.png
+walle_plant images/WalleWPlant1.png
 
 fairy images/Plant.png
 fairy images/Plant.png
@@ -82,3 +91,5 @@ eve_locked images/EveLocked2.png
 
 boot images/Plant.png
 boot images/Plant2.png
+
+soil images/Soil.png
